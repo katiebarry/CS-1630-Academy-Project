@@ -66,21 +66,25 @@
 				   file will be created after running the grading script and will contain the results.  The late.txt file will contain a log
 				   of which of the student's files were submitted late.  Both files will be visible on the website when grading the assignment.</p>
 				   <p>From the selected assignment file you can compile all of the
-				   students' projects and record the output by using the command "php script_grade.php -c assignment_name.java".
+				   students' projects and record the output by using the command <b>"php script_grade.php -c assignment_name.java"</b>.
 				   The -c flag stands for compile and the argument that corresponds to it will indicate the file that will 
 				   be used to run javac. Note that the grading scrpt also supports Python, which does not need to be compiled.  Therefore,
 				   if you are grading a Python assignment, you may skip this step.  To run a test input file on all of the students' 
-				   projects and record the output use the command: "php script_grade.php -t assignment_name -f input_file_name.txt". The -t flag stands for test and the argument 
+				   projects and record the output use the command: <b>"php script_grade.php -t assignment_name -f input_file_name.txt"</b>. The -t flag stands for test and the argument 
 				   that corresponds to it indicates the Java class to execute. The -f file stands for file and the argument 
 				   corresponding to it indicates the test file. To clean all of the Results.txt files for the assignment use 
-				   the command: "php script_grade.php -d all". The -d flag stands for delete and "all" would delete each students' 
+				   the command: <b>"php script_grade.php -d all"</b>. The -d flag stands for delete and "all" would delete each students' 
 				   results.txt file for that project. To clean an individual student's Results.txt file for the assignment use
-				   the command: "php script_grade.php -d studentID". The argument that corresponds to -d will either be "all" or a 
-				   specific student id (like in this example). When a test is run on the the students' projects, the output will 
+				   the command: "php script_grade.php -d folder_name". The argument that corresponds to -d will either be "all" or a 
+				   specific student_folder (like in this example). When a test is run on the the students' projects, the output will 
 				   be appended on to the end of the results.txt file which already contains the compilation information. If the 
 				   project did not compile successfully, the resulting errors will be appended for this section. Multiple tests 
 				   can be run and they will be simply appended to the end of the file in another section. The sections will be 
 				   distinguished by the title of the input file that was run.</p>
+
+				   <p>Python projects can be tested in the same way that java files are tested.  Simply use the command <b>"php script_grade.php -t python_file -f testfile.txt"</b>.</p>
+
+				   <p>Remember that a test file is not required in order to test a project.  If an assignment requires no input to run, simply omit the "-f" and "testfile.txt". </p> 
 				   
 				   <h2 id="GradeAssignment">Grading Assignments</h2>
 				   <p>After running the grading script, the individual student submission can be reviewed
