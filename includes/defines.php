@@ -1,6 +1,6 @@
 <?
 
-$testing = "James";
+$testing = "Rafe";
 
 if($testing == "Ping"){
 	define("DB_PATH","C:/xampp/htdocs/CS1630/CS-1630-Academy-Project/pages/academyprojectdb"); //path to the database file
@@ -24,7 +24,7 @@ else if ($testing == "web")
 else if ($testing == "Rafe")
 {
 	define("HOME_DIR","http://cs1630academy/");
-	define("DB_PATH","academyprojectdb");
+	define("DB_PATH","/Users/rabbits1756/Documents/Classes/Current/CS 1630/CS-1630-Academy-Project/academyprojectdb");
 	define("BASE_PATH","/Users/rabbits1756/Documents/Classes/Current/CS 1630/CS-1630-Academy-Project/");
 	define("CLASS_PATH","/Users/rabbits1756/Documents/Classes/Current/CS 1630/CS-1630-Academy-Project/");
 	define("GSCRIPT_PATH", "http://cs1630academy/pages/script_grade.php");

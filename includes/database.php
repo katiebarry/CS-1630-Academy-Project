@@ -76,9 +76,9 @@ if ($db && $testing)
             )
         ");
     insert_users();
-    insert_classes();
-    insert_assignments();
-    enroll();  
+    //insert_classes();
+    //insert_assignments();
+    //enroll();  
 }
 else
 {
@@ -92,7 +92,7 @@ function drop_tables()
 
 function insert_users()
 {
-    $pass = crypt("asdf",'$5$thisisthesalt!!!'); //IMPORTANT: $5$ indicates that SHA-256 is to be used.  Salt MUST be in single quotes.
+   /* $pass = crypt("asdf",'$5$thisisthesalt!!!'); //IMPORTANT: $5$ indicates that SHA-256 is to be used.  Salt MUST be in single quotes.
     $pass2 = crypt("cs1630", '$5$thisisthesalt!!!');
     query("
         insert into User values ('0', 'Rafe Zero', 'rhc8@pitt.edu', 'student', '$pass', 'thisisthesalt!!!');
@@ -107,7 +107,9 @@ function insert_users()
         insert into User values ('14', 'Rafe Fourteen', 'rafael.colton+fourteen@gmail.com', 'teacher', '$pass', 'thisisthesalt!!!');
         insert into User values ('15', 'Generic Admin', 'rafael.colton+admin@gmail.com', 'admin', '$pass', 'thisisthesalt!!!');
         insert into User values ('16', 'Admin', 'cs1630_academy_project@googlegroups.com', 'admin', '$pass2','thisisthesalt!!!');
-        ");
+        ");*/
+    $pass = crypt("root",'$5$thisisthesalt!!!');
+    query("insert into User values('0', 'Root Admin', 'root@root.root', 'admin', '$pass', 'thisisthesalt!!!');");
 }
 
 function insert_classes()

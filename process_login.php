@@ -11,6 +11,10 @@
 	if (!isset($results) || empty($results))
 	{
 		echo "Invalid User";
+		//echo $email;
+
+		//$results = $db->arrayQuery("select * from User");
+		//print_r($results);
 		if (isset($results) && $results !== FALSE)
 		{
 			//echo "Count: ".count($results)."<br>";

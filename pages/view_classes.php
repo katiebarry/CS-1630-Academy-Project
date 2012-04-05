@@ -7,17 +7,6 @@
 	$username = $_SESSION["username"];
 	$user_id = $_SESSION["user_id"];
 	$usertype = $_SESSION["usertype"];
-	
-	$results = $db->arrayQuery("select class_id from Enrollment where user_id = '$user_id'");
-	if (!isset($results) || empty($results)) //user has no classes
-	{
-		if ($usertype == "student"):
-			echo "<em>Sorry $username, you are not currently enrolled in any courses...</em>";
-		else:
-			echo "<em>Sorry $username, you do not currently have any courses available...</em>";
-		endif;
-	}
-	else
 
 	//This if block here contains the confirmation/error messages the admin receives upon trying to delete classes.
 	if ($usertype == "admin")

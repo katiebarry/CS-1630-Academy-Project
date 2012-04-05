@@ -18,32 +18,6 @@
 	{
 		global $db;
 		//get vars
-		$username = $_POST['username'];
-		$email = $_POST['email'];
-		$salt = make_salt();
-		$password = $salt . crypt($_POST['password'], "$5$" . $salt);
-		if($_POST['usertype'] == "student")
-			$usertype="student";
-		elseif($_POST['usertype'] == "teacher")
-			$usertype = "teacher";
-		else
-			echo "Error finding user type";
-
-		$query = "INSERT INTO User VALUES (NULL,'$username','$email','$usertype','$password','$salt');";
-
-		echo $query;
-
-		//add to db
-		$result = $db->queryExec($query, $error);
-    	if (!$result || $error)
-   	 	{
-        	return false;
-        	die("Query error: $error");
-    	}
-    	else
-    	{
-        	return true;
-    	}
     	
 		$username = sqlite_escape_string($_POST['username']);
 		$email = sqlite_escape_string($_POST['email']);
@@ -115,6 +89,7 @@
 	}
 
 	function insert_student($linesplit)
+	{
 
 		if (!is_dir(CLASS_PATH."CSVUploads"))
 		{
@@ -168,7 +143,6 @@
 	}
 
 	function insert_user($linesplit)
-
 	{
 		global $db;
 		$username = $linesplit[0];
@@ -186,14 +160,7 @@
 		$password = crypt($linesplit[3], "$5$" . $salt);
 
 		$query = "INSERT INTO User VALUES (NULL,'$username','$email','$usertype','$password','$salt');";
-		echo $query . "<br>";
 
-		//add to db
-		$result = $db->queryExec($query, $error);
-    	if (!$result || $error)
-   	 	{
-        	return false;
-        	die("Query error: $error");
 		//add to db
 		@$result = $db->queryExec($query, $error);
     	if (empty($result) || $error)
@@ -221,5 +188,3 @@
 
 		return $salt;
 	}
-
-?>
