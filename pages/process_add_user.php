@@ -69,28 +69,6 @@
 
 		$filename = basename($_FILES['uploadedfile']['name']);
 
-		if(!move_uploaded_file($_FILES['uploadedfile']['tmp_name'], CLASS_PATH . "CSVUploads/" . $filename))
-		{
-			echo "Error uploading CSV file: ";
-		}
-		
-		$file = fopen(CLASS_PATH . "CSVUploads/" . $filename, "r") or exit("Unable to open file!");
-		//Output a line of the file until the end is reached
-		while(!feof($file))
-  		{
-  			$line = fgets($file);
-  			$linesplit = explode(",", $line);
-  			insert_student($linesplit);
-  		}
-		fclose($file);
-		
-
-
-	}
-
-	function insert_student($linesplit)
-	{
-
 		if (!is_dir(CLASS_PATH."CSVUploads"))
 		{
 			mkdir(CLASS_PATH."CSVUploads");
@@ -102,7 +80,7 @@
         	$_SESSION["aur"]["message"] = "Error uploading .csv file.";
         	return false;
 		}
-		
+
 		$lines = file(CLASS_PATH . "CSVUploads/" . $filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 		if (empty($lines))
@@ -124,11 +102,15 @@
 		foreach ($lines as $line)
 		{
 			$linesplit = explode(",",$line);	
+
 			if (!insert_user($linesplit))
 			{
 				$_SESSION["aur"]["success"] = false;
+
 				if (!isset($_SESSION["aur"]["message"])): $_SESSION["aur"]["message"] = ""; endif;
+        		
         		$_SESSION["aur"]["message"] .= "Error adding the following line: $line<br>";
+				
 				$success = false;
 			}
 		}
@@ -139,7 +121,8 @@
         	$_SESSION["aur"]["message"] = "All users successfully added.";
 		}
 
-		return $success;
+		return $success;		
+
 	}
 
 	function insert_user($linesplit)

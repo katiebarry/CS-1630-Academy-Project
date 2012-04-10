@@ -26,7 +26,8 @@
 			break;
 
 		case "admin";
-			echo "<p>As an administrator you have the ablility to perform different maintainence actions. You can add users to the system, create new classes, and enroll users in specific classes. To get started, please select an option from the navigation menu on the left.</p>";
+			echo "<p>As an administrator you have the ablility to perform different maintainence actions. You can add users to the system, create new classes, 
+			and enroll users in specific classes. To get started, please select an option from the navigation menu on the left.</p>";
 			break;
 	}
 ?>

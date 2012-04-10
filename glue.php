@@ -7,7 +7,7 @@ require("includes/defines.php");
 $db = new SQLiteDatabase(DB_PATH, 0666, $dberror);
 $_SESSION["db"] = $db;
 
-include("includes/database.php");
+//include("includes/database.php");
 
 if (!isset($_SESSION["tokens_set"]))
 {
@@ -88,7 +88,7 @@ function get_header()
 	<!doctype html>
 		<html>
 		<head>
-			<title>Pittsburgh Science & Technology Academy | Homework Submission Page</title>
+			<title>Pittsburgh Science &amp; Technology Academy | Homework Submission Page</title>
 			<? print_links(); ?>
 		</head>	
 		<body>
@@ -104,36 +104,33 @@ function get_header()
 					<? hr(); ?>
 					<div class='nav-item'><a href="<?= HOME_DIR ?>">Home</a></div>
 					<div class='nav-item'><a href="<?= $_SERVER["HTTP_REFERER"] ?>">Back</a></div>
-					<? if ($usertype == "student" || $usertype == "teacher"): ?>
-						<? hr(); ?>
-						<!--both-->
-						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_classes.php">View Classes</a></div>
-						<!--end both -->
-					<? endif; ?>
-					
 					<? if ($usertype == "student"): ?>
-						<!--student only stuff-->
 
-						<!--end student only stuff-->
+						<? hr(); ?>
+						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_classes.php">View Classes</a></div>
+
 					<? elseif ($usertype == "teacher"): ?>
-						<!--teacher only stuff-->
+
+						<? hr(); ?>
+						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_classes.php">View Classes</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/create_assig.php">Create Assignment</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/grade_assig.php">Grade Assignment</a></div>
-						<!--end teacher only stuff-->
+
 					<? elseif ($usertype == "admin"): ?>
-						<!--admin only stuff-->
+
 						<? hr(); ?>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/add_user.php">Add User</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/create_class.php">Create Class</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_classes.php">Delete Classes</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/modify_users.php">Modify Users</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_log.php">View Log</a></div>
-					<!--end admin only stuff-->
+
 					<? endif; ?>
-					<? hr(); ?>
-					<div class='nav-item'><a href="">Contact Us</a></div>
-					<div class='nav-item'><a href="<?= HOME_DIR ?>pages/help.php">Help</a></div>
-					<div class='nav-item'><a href="<?= HOME_DIR ?>logout.php">Logout</a></div>
+						
+						<? hr(); ?>
+						<div class='nav-item'><a href="">Contact Us</a></div>
+						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/help.php">Help</a></div>
+						<div class='nav-item'><a href="<?= HOME_DIR ?>logout.php">Logout</a></div>
 
 				</div>
 				<div id="inner-content">

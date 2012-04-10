@@ -91,7 +91,8 @@ if ($usertype == "admin")
 		foreach ($results as $entry)
 		{ 
 			//admin's can't modify other admins
-			if ($entry['usertype'] == "admin" && $entry['user_id'] != $_SESSION['user_id']) continue;
+			if ($entry['usertype'] == "admin" && $entry['user_id'] != $_SESSION['user_id'] && $entry['username'] != "Root Admin") continue;
+		  
 		  //It's easier to echo this out if it is stored this way.
 		  $id = $entry['user_id'];
 		  echo "<tr>";
