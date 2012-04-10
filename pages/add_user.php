@@ -54,7 +54,7 @@
 		<input type="submit" value="Upload File" name="uploadcsv" />
 		<? add_token(); ?>
 	</form>
-	<em><div style='font-size: 12px; margin-top: 15px;'>File must be formated as (username, email, user type, password).
+	<em><div style='font-size: 12px; margin-top: 15px;'>File must be formated as (username,email,user type,password).
 		If you <br>are exporting data from Excel, please make sure to remove the column headers.</div></em>
 	<br>
 

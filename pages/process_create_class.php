@@ -14,9 +14,11 @@
 	{
 		createMultipleClasses();
 	}
+
 	return_to(HOME_DIR."pages/create_class.php");
 	
-	function createSingleClass(){
+	function createSingleClass()
+	{
 		global $db;
 		
 		$class_name = sqlite_escape_string(trim($_POST['class_name']));
@@ -35,8 +37,10 @@
 		{
 			$instructor_id = $results[0]['user_id'];
 			$query = "insert into Class values(NULL, '$class_name', '$instructor_id', '$instructor_email', '$room', '$description')";
-			$result = $db->queryExec($query, $error);
-			if (empty($result))
+			
+			@$result = $db->queryExec($query, $error);
+			
+			if (empty($result) || $error)
 			{
 				$_SESSION["creation-message-error"] = "Error inserting class into database: $error";
 				return false;
@@ -44,8 +48,10 @@
 			else
 			{
 				$class_id = $db->lastInsertRowid();
-				$results = $db->queryExec("insert into Enrollment values ('$class_id','$instructor_id')", $error);
-				if (empty($results))
+				
+				@$results = $db->queryExec("insert into Enrollment values ('$class_id','$instructor_id')", $error);
+				
+				if (empty($results) || $error)
 				{
 					$_SESSION["creation-message-error"] = "Error enrolling instructor in course: $error";
 					return false;
@@ -59,74 +65,116 @@
 		}
 	}
 		
-	function createMultipleClasses(){
+	function createMultipleClasses()
+	{
 		global $db;
-		$filename = $_FILES['uploadedfile']['tmp_name'];
-		if($_FILES['uploadedfile']['name'] == null || $_FILES['uploadedfile']['error'] != 0){
+
+		if($_FILES['uploadedfile']['error'] != 0)
+		{
 			$_SESSION["creation-message-error"] = "Error creating class: File upload fail";
 			return false;
 		}
+
+		$filename = basename($_FILES['uploadedfile']['name']);
 		
-		$file = fopen($filename, "r") or exit("Unable to open file!");
-		//parse file into arrays
-		while(!feof($file))
-  		{
-  			$line = fgets($file);
-  			$linesplit = explode("|", $line);
-			$lines[] = $linesplit;
-			if(count($linesplit) != 4){
-				$_SESSION["creation-message-error"] = "Error creating class: Wrong format in file.";
-				return false;
-			}
-  		}
-		fclose($file);
-		for($i = 0; $i < count($lines); $i++){
-			$email = trim($lines[$i][1]);
-			//check if email exists
-			//else set error, break, return
-			$query = "select user_id,usertype from User where email = '$email'";
-			$results = $db->arrayQuery($query);
-			if(empty($results)){//email is not found in the User's database
-				$_SESSION["creation-message-error"] = "Error creating class: instructor email not found - $email";
-				return false;
-			}else{
-				if($results[0]['usertype'] != "teacher"){//the email is not a teacher's email
-					$_SESSION["creation-message-error"] = "Error creating class: instructor email not valid - $email";
-					return false;
-				}
-				else{//no problem
-					$lines[$i][] = $results[0]['user_id'];
-				}
+		//creates the CSVUploads dir
+		if (!is_dir(CLASS_PATH."CSVUploads"))
+		{
+			mkdir(CLASS_PATH."CSVUploads");
+		}
+
+		//moves the .csv file to the uploads dir
+		if(!move_uploaded_file($_FILES['uploadedfile']['tmp_name'], CLASS_PATH . "CSVUploads/" . $filename))
+		{
+        	$_SESSION["creation-message-error"] = "Error uploading .csv file.";
+        	return false;
+		}
+
+		$lines = file(CLASS_PATH . "CSVUploads/" . $filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+		if (empty($lines))
+		{
+			$_SESSION["creation-message-error"] = "Error creating class: No entries found in file.";
+        	return false;
+		}
+
+		if (count(explode(",",$lines[0])) != 4)
+		{
+			$_SESSION["creation-message-error"] = "Error creating class: Data format in .csv file is invalid.";
+        	return false;	
+		}
+
+		$success = true;
+
+		foreach ($lines as $line)
+		{
+			$linesplit = explode(",",$line);
+
+			if (!insert_class($linesplit))
+			{
+				if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+				$_SESSION["creation-message-error"] .= "Error adding the following line: $line<br>";
+				$success = false;
 			}
 		}
-		
-		for($i = 0; $i < count($lines); $i++){
-			$className = trim($lines[$i][0]);
-			$instructor_email = trim($lines[$i][1]);
-			$room = trim($lines[$i][2]);
-			$description = nl2br(trim($lines[$i][3]));
-			$instructor_id = $lines[$i][4];
-			
-			$query = "insert into Class values(NULL, '$className', '$instructor_id', '$instructor_email', '$room', '$description')";
-			$result = $db->queryExec($query, $error);
-			if (empty($result))
+
+		if ($success)
+		{
+
+			if(count($lines) == 1)
 			{
-				$_SESSION["creation-message-error"] = "Error inserting class into database: $error";
-				return false;
-			}
+				$_SESSION["creation-message"] = "1 class successfully created.";
+			} 
 			else
 			{
-				$class_id = $db->lastInsertRowid();
-				$results = $db->queryExec("insert into Enrollment values ('$class_id','$instructor_id')", $error);
-				if (empty($results))
-				{
-					$_SESSION["creation-message-error"] = "Error enrolling instructor in course: $error";
-					return false;
-				}
-			}
+				$_SESSION["creation-message"] = count($lines) . " classes successfully created.";	
+			} 
 		}
-		if(count($lines) == 1) $_SESSION["creation-message"] = "1 Class successfully created.";
-		else $_SESSION["creation-message"] = count($lines) . " Classes successfully created.";
+
+		return $success;
+	}
+
+	function insert_class($linesplit)
+	{
+		$teacher_email = trim($linesplit[1]);
+
+		$query = "select user_id, usertype from User where email = '$email'";
+		$results = $db->arrayQuery($query);
+		if(empty($results))//email is not found in the User's database
+		{
+			$_SESSION["creation-message-error"] = "Error creating class: instructor with email \"$email\" not found";
+			return false;
+		}
+		elseif ($results[0]['usertype'] != "teacher") 
+		{
+			$_SESSION["creation-message-error"] = "Error creating class: instructor email not valid - $email";
+			return false;
+		}
+		else
+		{
+			$teacher_id = $results[0]['user_id'];
+		}
+
+		$class_name = trim($linesplit[0]);
+		$room = trim($linesplit[2]);
+		$description = nl2br(trim($linesplit[3]));
+		$query = "insert into Class values (NULL, '$class_name', '$teacher_id', '$teacher_email', '$room', '$description')";
+		@$result = $db->queryExec($query, $error);
+		if (empty($result) || $error)
+		{
+			$_SESSION["creation-message-error"] = "Error inserting class into database: $error";
+			return false;
+		}
+
+		$class_id = $db->lastInsertRowid();
+
+		@$results = $db->queryExec("insert into Enrollment values ('$class_id','$instructor_id')", $error);
+		if (empty($results) || $error)
+		{
+			$_SESSION["creation-message-error"] = "Error enrolling instructor in course: $error";
+			return false;
+		}
+
 		return true;
 	}
 ?>

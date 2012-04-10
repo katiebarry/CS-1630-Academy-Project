@@ -13,7 +13,6 @@
 
 	return_to(HOME_DIR."pages/add_user.php"); //don't forget to specify a page
 
-
 	function add_user_form()
 	{
 		global $db;
@@ -90,7 +89,7 @@
 			return false;
 		}
 
-		if (count($lines[0]) != 4)
+		if (count(explode(",",$lines[0])) != 4)
 		{
 			$_SESSION["aur"]["success"] = false;
         	$_SESSION["aur"]["message"] = "Data format in .csv file is invalid.";
@@ -128,9 +127,9 @@
 	function insert_user($linesplit)
 	{
 		global $db;
-		$username = $linesplit[0];
-		$email = $linesplit[1];
-		$usertype = $linesplit[2];
+		$username = trim($linesplit[0]);
+		$email = trim($linesplit[1]);
+		$usertype = trim($linesplit[2]);
 
 		if (!($usertype == "teacher" || $usertype == "student" || $usertype == "admin"))
 		{
@@ -140,7 +139,7 @@
 		}
 
 		$salt = make_salt();
-		$password = crypt($linesplit[3], "$5$" . $salt);
+		$password = crypt(trim($linesplit[3]), "$5$" . $salt);
 
 		$query = "INSERT INTO User VALUES (NULL,'$username','$email','$usertype','$password','$salt');";
 

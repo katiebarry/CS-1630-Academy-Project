@@ -88,7 +88,7 @@
 		<input type="submit" value="Upload File" name="multipleClasses" />
 		<? add_token(); ?>
 	</form>
-	<em><div style='font-size: 12px; margin-top: 15px;'>File must be formated as (class name | instructor email | room | description).
+	<em><div style='font-size: 12px; margin-top: 15px;'>File must be formated as (class name,instructor email,room,description).
 		If you <br>are exporting data from Excel, please make sure to remove the column headers.</div></em>
 	<br>
 	
