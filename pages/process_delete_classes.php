@@ -37,6 +37,13 @@
 				{
 					//Let's count the classes deleted so the admin can visually compare that to how many he meant to delete.
 					$count_deleted++;
+					$query = "delete from Enrollment where class_id = $class_id";
+					$result = $db->queryExec($query, $error);
+					if (empty($result))
+					{
+						$_SESSION["delete-classes-message-error"] = "Error deleting entry from Enrollment table: $error";
+						return_to(HOME_DIR."pages/view_classes.php");
+					}
 				}
 			}
 			if($count_deleted == 1)

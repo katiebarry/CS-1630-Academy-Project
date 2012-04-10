@@ -46,6 +46,8 @@
 	
 ?>
 	<h1>Create Class</h1>
+	<hr>
+	<h2>Create Single Class</h2>
 	<form id="create_class" method="post" action="process_create_class.php" onsubmit="return submit_create_class()">
 	<table>
 	<tr>
@@ -71,12 +73,24 @@
 		<td>Description:</td><td><textarea name='description' id='description' rows=10 cols=40 style="resize: vertical;"></textarea></td>
 	</tr>
 	<tr>
-		<td><input type="submit" value="Submit"/>&nbsp;
+		<td><input type="submit" value="Submit" name="singleClass"/>&nbsp;
 		<input type="reset" value="Reset"/></td>
 		<td><? add_token(); ?></td>
 	</tr>
 	</table>
 	</form>
+	<br>
+	<hr>
+	<h2>Create Multiple Classes</h2>
+	<form enctype="multipart/form-data" id='multi' name="csvform" action="process_create_class.php" method="POST" >
+		<input type="hidden" name="MAX_FILE_SIZE" value="300000000"/>
+		Choose a file to upload: <input id='file' name="uploadedfile" type="file" /><br />
+		<input type="submit" value="Upload File" name="multipleClasses" />
+		<? add_token(); ?>
+	</form>
+	<em><div style='font-size: 12px; margin-top: 15px;'>File must be formated as (class name | instructor email | room | description).
+		If you <br>are exporting data from Excel, please make sure to remove the column headers.</div></em>
+	<br>
 	
 	<script type="text/javascript">
 
@@ -100,7 +114,27 @@
 		}
 		return true;
 	}
-
+	
+	$(document).ready(function(){
+		$('#multi').submit(function(){
+			if ($('#file').val() == ""){
+				alert("Please specify a file to upload.");
+				return false;
+			}
+			else{
+				var filename = $('#file').val();
+				var ext = filename.slice(-4);
+				if (ext != ".csv"){
+					alert("File must be a .csv file");
+					return false;
+				}
+				else{
+					return true;
+				}
+			}
+		});
+	});
+	
 </script>
 
 	
