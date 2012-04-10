@@ -1,5 +1,6 @@
 <?
 session_start();
+ini_set("auto_detect_line_endings", true);
 
 require("includes/defines.php");
 //include("includes/Browser.php");
