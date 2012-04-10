@@ -7,13 +7,17 @@
 	$results = $db->arrayQuery("select * from Log");
 
 	?>
-	<div id='log-table-container'>
-	<form method="POST" name="logform" action="process_view_log.php">
-	<? add_token(); ?>
+	<div id='table-container'>
+	<? if ($_SESSION["usertype"] == "admin"): ?>
+		<form method="POST" name="logform" action="process_view_log.php">
+		<? add_token(); ?>
+	<? endif; ?>
 	<table id="logtable">	
 		<thead>
 			<tr>
-				<th>Select</th>
+				<? if ($_SESSION["usertype"] == "admin"): ?>
+					<th>Select</th>
+				<? endif; ?>
 				<th>Course</th>
 				<th>Assig</th>
 				<th>User Name</th>
@@ -37,7 +41,7 @@
 		else
 			$success = "False";
 		echo "<tr>";
-		echo "<td><input type='checkbox' name='LogId_$loaded[$i]'/>";
+		if ($_SESSION["usertype"] == "admin"): echo "<td><input type='checkbox' name='LogId_$loaded[$i]'/>"; endif;
 		echo "<td>$class_name</td>";
 		echo "<td>$assig_name</td>";
 		echo "<td>$res[username]</td>";
@@ -52,10 +56,12 @@
 	?>
 		</tbody>
 	</table><br><br>
-	<input type="submit" Value="Delete Selected" Name="delete"/>&nbsp;
-	<input type="button" Value="Toggle All" name="toggle" onclick="toggle_all()"/>
+	<? if ($_SESSION["usertype"] == "admin"): ?>
+		<input type="submit" Value="Delete Selected" Name="delete"/>&nbsp;
+		<input type="button" Value="Toggle All" name="toggle" onclick="toggle_all()"/>
+		</form>
+	<? endif; ?>
 	<br><br>
-	</form>
 	</div>
 <?
 
@@ -65,21 +71,24 @@
 
 		$(document).ready(function() {
     		$('#logtable').dataTable({});
+    		$('#logtable_filter').after("<br>");
 		});
 
-		function toggle_all()
-		{
-			$('input[type=checkbox]').each(function(index) {
-				if($(this).is(':checked'))
-				{
-					$(this).removeAttr('checked'); //unchecks it
-				}
-				else
-				{
-					$(this).attr('checked','checked'); //turns them on
-				}
-			});
-		}
+		<? if ($_SESSION["usertype"] == "admin"): ?>
+			function toggle_all()
+			{
+				$('input[type=checkbox]').each(function(index) {
+					if($(this).is(':checked'))
+					{
+						$(this).removeAttr('checked'); //unchecks it
+					}
+					else
+					{
+						$(this).attr('checked','checked'); //turns them on
+					}
+				});
+			}
+		<? endif; ?>
 
 
 	</script>

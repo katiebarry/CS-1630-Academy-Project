@@ -116,6 +116,8 @@ function get_header()
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_classes.php">View Classes</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/create_assig.php">Create Assignment</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/grade_assig.php">Grade Assignment</a></div>
+						<? hr(); ?>
+						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_log.php">View Log</a></div>						
 
 					<? elseif ($usertype == "admin"): ?>
 

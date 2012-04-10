@@ -95,13 +95,15 @@
 			$headers .= 'Content-type: text/html; charset=iso-8859-1'."\r\n";
 			$headers .= "From: PSTA Homework Grading System <webserver@cs.pitt.edu>"."\r\n";
 
+			$image_tag = (file_exists(HOME_DIR."images/PSTALogo.png")) ? "<img src='".HOME_DIR."images/PSTALogo.png'>" : "";
+
 			$message = "
 			<html>
 				<body>
 				<table style='border-spacing: 0px; border-collapse: collapse;'>
 					<tr style='width: 601px; height: 100px; background-color: #414A6C; color: white; padding: 10px; border-right: 1px solid #414A6C;'>
 							<td style='padding: 10px'><div style='font-size: 30px; padding-top: 15px; padding-left: 15px;'>Pittsburgh Science and Technology Academy</div><br><div style='font-size: 18px; padding-left: 15px'>Homework Grading and Submission System</div></td>
-							<td style='padding: 10px'><div style='width: 75px;'></div></td>
+							<td style='padding: 10px'><div style='width: 75px;'>$image_tag</div></td>
 					</tr>
 					<tr style='border-left: 1px solid black; border-right: 1px solid black;'>
 						<td style='padding-left: 10px; padding-top: 25px; padding-bottom; 25px;'>

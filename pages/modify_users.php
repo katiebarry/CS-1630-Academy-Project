@@ -74,42 +74,45 @@ if ($usertype == "admin")
 	<? add_token(); ?>
 	<br />
 	<br />
-	<table id="users_table">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Type</th>
-				<th>Password</th>
-				<th>Select</th>
-			</tr>
-		</thead>
-		<tbody>
-		<!-- It is now time to go to php to populate the table with info from $results -->
-		<?php
-		//$arrayLength = count($results); //Delete if not used at end
-		//for($i = 0; $i <= $arrayLength; $i = $i + 6)
-		foreach ($results as $entry)
-		{ 
-			//admin's can't modify other admins
-			if ($entry['usertype'] == "admin" && $entry['user_id'] != $_SESSION['user_id'] && $entry['username'] != "Root Admin") continue;
-		  
-		  //It's easier to echo this out if it is stored this way.
-		  $id = $entry['user_id'];
-		  echo "<tr>";
-		  //First we have the particular user's name and usertype.
-		  echo "<td>{$entry['username']}</td><td>{$entry['usertype']}</td>";
-		  //Now we get a text input box for inputing a new password. 
-		  echo "<td><input type='text' name='password[]' id='password_$id' style='width: 100px;'/></td>";
-		  //Now a checkbox for applying the given action to this person.
-		  echo "<td><input type='checkbox' name='check[]' id='check_$id' value='$id' onclick='checkClick($id)' /></td>"; 
-		  echo "</tr>";     
-		} 
-		?>
-		
-		
-		
-		</tbody>
-	</table>
+	<div id='table-container'>
+		<table id="users_table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Type</th>
+					<th>Password</th>
+					<th>Select</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- It is now time to go to php to populate the table with info from $results -->
+			<?php
+			//$arrayLength = count($results); //Delete if not used at end
+			//for($i = 0; $i <= $arrayLength; $i = $i + 6)
+			foreach ($results as $entry)
+			{ 
+				//admin's can't modify other admins
+				if ($entry['usertype'] == "admin" && $entry['user_id'] != $_SESSION['user_id'] && $entry['username'] != "Root Admin") continue;
+			  
+			  //It's easier to echo this out if it is stored this way.
+			  $id = $entry['user_id'];
+			  echo "<tr>";
+			  //First we have the particular user's name and usertype.
+			  echo "<td>{$entry['username']}</td><td>{$entry['email']}</td><td>{$entry['usertype']}</td>";
+			  //Now we get a text input box for inputing a new password. 
+			  echo "<td><input type='text' name='password[]' id='password_$id' style='width: 100px;'/></td>";
+			  //Now a checkbox for applying the given action to this person.
+			  echo "<td><input type='checkbox' name='check[]' id='check_$id' value='$id' onclick='checkClick($id)' /></td>"; 
+			  echo "</tr>";     
+			} 
+			?>
+			
+			
+			
+			</tbody>
+		</table>
+	</div>
 </form>
 	
 
@@ -118,8 +121,8 @@ if ($usertype == "admin")
 	$(document).ready(function(){
 	  $('#users_table').dataTable({
 		"aoColumnDefs": [
-		  { "asSorting": [ "asc", "desc" ], "aTargets": [ 0, 1 ] },
-		  { "asSorting": [ ], "aTargets": [ 2, 3 ] },
+		  { "asSorting": [ "asc", "desc" ], "aTargets": [ 0, 1, 2 ] },
+		  { "asSorting": [ ], "aTargets": [ 3, 4 ] },
 		  { "sWidth": "35%", "aTargets": [ 0 ] },
 		  { "sWidth": "25%", "aTargets": [ 1 ] }
 		]

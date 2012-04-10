@@ -1521,7 +1521,7 @@ tr th {
   margin-left: 200px;
   min-height: 325px;
 }
-#content #inner-content #log-table-container {
+#content #inner-content #table-container {
   width: 660px;
   padding: 5px;
   overflow: auto;
