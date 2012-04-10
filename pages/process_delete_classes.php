@@ -27,24 +27,29 @@
 			{
 				$class_id = $checked[$i];
 				$query = "delete from Class where class_id = $class_id";
-				$result = $db->queryExec($query, $error);
-				if (empty($result))
+				@$result = $db->queryExec($query, $error);
+				
+				if (empty($result) || $error)
 				{
 					$_SESSION["delete-classes-message-error"] = "Error deleting class_id $class_id: $error";
 					return_to(HOME_DIR."pages/view_classes.php");
 				}
-				else
+				
+				//not necessary because the forign key cascades deletes - in other words, the database does this automatically
+				/*else
 				{
 					//Let's count the classes deleted so the admin can visually compare that to how many he meant to delete.
 					$count_deleted++;
 					$query = "delete from Enrollment where class_id = $class_id";
-					$result = $db->queryExec($query, $error);
-					if (empty($result))
+					
+					@$result = $db->queryExec($query, $error); //may throw an warning - needs to be suppressed, since it is checked immediately below
+					
+					if (empty($result) || $error)
 					{
 						$_SESSION["delete-classes-message-error"] = "Error deleting entry from Enrollment table: $error";
 						return_to(HOME_DIR."pages/view_classes.php");
 					}
-				}
+				}*/
 			}
 			if($count_deleted == 1)
 			{
