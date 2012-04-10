@@ -59,11 +59,11 @@ if ($usertype == "admin")
 <!-- onsubmit="return submit_modify_users()" -->
 
 <form id="modify_users" method="post" action="process_modify_users.php" >
-	<select name="class_name" id="class_name" style='width: 130px;'>
+	<select name="class_id" id="class_name" style='width: 130px;'>
 		<option value="">Classes...</option>
 		<? 
 		for($i = 0; $i < count($classes); $i++){
-			echo "<option value='". $classes[$i]['class_name']."'>". $classes[$i]['class_name']. "</option>";
+			echo "<option value='". $classes[$i]['class_id']."'>". $classes[$i]['class_name']. "</option>\n";
 		}
 		?>
 	</select>
@@ -78,11 +78,11 @@ if ($usertype == "admin")
 		<table id="users_table">
 			<thead>
 				<tr>
+					<th>Select</th>
 					<th>Name</th>
 					<th>Email</th>
 					<th>Type</th>
 					<th>Password</th>
-					<th>Select</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -98,13 +98,13 @@ if ($usertype == "admin")
 			  //It's easier to echo this out if it is stored this way.
 			  $id = $entry['user_id'];
 			  echo "<tr>";
+			  //Now a checkbox for applying the given action to this person.
+			  echo "<td><input type='checkbox' name='check[]' id='check_$id' value='$id' onclick='checkClick($id)' /></td>";
 			  //First we have the particular user's name and usertype.
 			  echo "<td>{$entry['username']}</td><td>{$entry['email']}</td><td>{$entry['usertype']}</td>";
 			  //Now we get a text input box for inputing a new password. 
-			  echo "<td><input type='text' name='password[]' id='password_$id' style='width: 100px;'/></td>";
-			  //Now a checkbox for applying the given action to this person.
-			  echo "<td><input type='checkbox' name='check[]' id='check_$id' value='$id' onclick='checkClick($id)' /></td>"; 
-			  echo "</tr>";     
+			  echo "<td><input type='text' name='password[]' id='password_$id' style='width: 100px;'/></td>"; 
+			  echo "</tr>\n";     
 			} 
 			?>
 			
@@ -121,10 +121,11 @@ if ($usertype == "admin")
 	$(document).ready(function(){
 	  $('#users_table').dataTable({
 		"aoColumnDefs": [
-		  { "asSorting": [ "asc", "desc" ], "aTargets": [ 0, 1, 2 ] },
-		  { "asSorting": [ ], "aTargets": [ 3, 4 ] },
+		  { "asSorting": [ "asc", "desc" ], "aTargets": [ 1, 2, 3 ] },
+		  { "asSorting": [ ], "aTargets": [ 4 ] },
 		  { "sWidth": "35%", "aTargets": [ 0 ] },
-		  { "sWidth": "25%", "aTargets": [ 1 ] }
+		  { "sWidth": "25%", "aTargets": [ 1 ] },
+		  { 'bSortable': false, 'aTargets': [ 0 ] }
 		]
 	  });
 	  $('#users_table_filter').after("<br>");

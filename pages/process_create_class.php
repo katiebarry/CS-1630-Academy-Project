@@ -136,9 +136,10 @@
 
 	function insert_class($linesplit)
 	{
+		global $db;
 		$teacher_email = trim($linesplit[1]);
 
-		$query = "select user_id, usertype from User where email = '$email'";
+		$query = "select user_id, usertype from User where email = '$teacher_email'";
 		$results = $db->arrayQuery($query);
 		if(empty($results))//email is not found in the User's database
 		{

@@ -23,37 +23,31 @@
 		//Now let's go case by case
 		if($requested_action == "Enroll")
 		{
-			//We want to enroll the selected students in the selected class
-			$class_name = sqlite_escape_string(trim($_POST['class_name']));
-			$query = "select class_id from Class where class_name = '$class_name'";
-			$results = $db->arrayQuery($query);
-			if(empty($results))
+			$class_id = sqlite_escape_string($_POST['class_id']);
+			$_SESSION["modify-message-error"] = "";
+			$_SESSION["modify-message"] = "";
+
+			for($i=0; $i < $count; $i++)
 			{
-				$_SESSION["modify-message-error"] = "Error inserting enrollment into database: class name not found";
-				return_to(HOME_DIR."pages/modify_users.php");			
-			}
-			else
-			{
-				$class_id = $results[0]['class_id'];
-				for($i=0; $i < $count; $i++)
+				//enroll this particular student in the class
+				$user_id = $checked[$i];
+				$query = "insert into Enrollment values('$class_id', '$user_id')";
+				
+				@$result = $db->queryExec($query, $error);
+				if (empty($result) || $error)
 				{
-					//enroll this particular student in the class
-					$user_id = $checked[$i];
-					$query = "insert into Enrollment values('$class_id', '$user_id')";
-					$result = $db->queryExec($query, $error);
-					if (empty($result))
-					{
-						$_SESSION["modify-message-error"] = "Error inserting enrollment into database: $error";
-						return_to(HOME_DIR."pages/modify_users.php");
-					}
-					else
-					{
-						//Great success! Let's continue!
-					}
+					$_SESSION["modify-message-error"] .= "Error enrolling user $user_id into class $class_id: $error<br>";
 				}
-				$_SESSION["modify-message"] = "Users successfully enrolled.";
-				return_to(HOME_DIR."pages/modify_users.php");		
+				else
+				{
+					$_SESSION["modify-message"] .= "User $user_id successfully enrolled in $class_id.<br>";
+				}
 			}
+
+			if ($_SESSION["modify-message"] == ""): unset($_SESSION["modify-message"]); endif;
+			if ($_SESSION["modify-message-error"] == ""): unset($_SESSION["modify-message"]); endif;
+
+			return_to(HOME_DIR."pages/modify_users.php");		
 		}
 		elseif($requested_action == "Delete Users")
 		{

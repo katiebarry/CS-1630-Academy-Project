@@ -54,7 +54,7 @@
 				<tr>
 					<th>Class Name</th>
 					<th>Instructor Name</th>
-					<th>Email</th>
+					<th>Instructor Email</th>
 					<th>Select</th>
 				</tr>
 			</thead>
