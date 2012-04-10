@@ -49,6 +49,9 @@
 
 			return_to(HOME_DIR."pages/modify_users.php");		
 		}
+		/**
+		Fixed until here.
+		**/
 		elseif($requested_action == "Delete Users")
 		{
 			for($i=0; $i < $count; $i++)
