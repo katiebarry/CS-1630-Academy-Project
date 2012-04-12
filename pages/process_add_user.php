@@ -100,6 +100,7 @@
 
 		foreach ($lines as $line)
 		{
+			$line = trim($line);
 			$linesplit = explode(",",$line);	
 
 			if (!insert_user($linesplit))
@@ -108,7 +109,7 @@
 
 				if (!isset($_SESSION["aur"]["message"])): $_SESSION["aur"]["message"] = ""; endif;
         		
-        		$_SESSION["aur"]["message"] .= "Error adding the following line: $line<br>";
+        		$_SESSION["aur"]["message"] .= "Error adding the following line: $line.<br>";
 				
 				$success = false;
 			}

@@ -268,7 +268,7 @@ function print_current_files()
 				$linenum = 0;
 				foreach ($lines as $line)
 				{
-					echo "$linenum: &nbsp;&nbsp;&nbsp;".strip_tags($line);
+					echo "$linenum: &nbsp;&nbsp;&nbsp;".strip_tags(trim($line));
 					$linenum++;
 				}
 

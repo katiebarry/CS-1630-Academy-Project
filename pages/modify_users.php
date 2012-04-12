@@ -37,7 +37,8 @@ if ($usertype == "admin")
 			</script>
 		<?
 	}
-	elseif (isset($_SESSION["modify-message-error"]))
+	
+	if (isset($_SESSION["modify-message-error"]))
 	{
 		echo "<div id='class-modify-message' class='warning message'>".$_SESSION["modify-message-error"]."<br></div>";
 		unset($_SESSION["modify-message-error"]);
@@ -67,9 +68,9 @@ if ($usertype == "admin")
 		}
 		?>
 	</select>
-	<input type="submit" name="modifySubmit" onclick="return clickEnroll()" value="Enroll"/>&nbsp;
-	<input type="submit" name="modifySubmit" onclick="return clickDelete()" value="Delete Users"/>&nbsp;
-	<input type="submit" name="modifySubmit" onclick="return clickPassword()" value="Change Passwords"/>&nbsp;
+	<input type="submit" name="modifySubmit" onclick="return clickEnroll();" value="Enroll"/>&nbsp;
+	<input type="submit" name="modifySubmit" onclick="return clickDelete();" value="Delete Users"/>&nbsp;
+	<input type="submit" name="modifySubmit" onclick="return clickPassword();" value="Change Passwords"/>&nbsp;
 	<input type="reset" value="Reset">
 	<? add_token(); ?>
 	<br />
@@ -103,7 +104,7 @@ if ($usertype == "admin")
 			  //First we have the particular user's name and usertype.
 			  echo "<td>{$entry['username']}</td><td>{$entry['email']}</td><td>{$entry['usertype']}</td>";
 			  //Now we get a text input box for inputing a new password. 
-			  echo "<td><input type='text' name='password[]' id='password_$id' style='width: 100px;'/></td>"; 
+			  echo "<td><input type='text' name='password[]' id='password_$id' style='width: 100px;' title='$id'/></td>"; 
 			  echo "</tr>\n";     
 			} 
 			?>
@@ -129,6 +130,17 @@ if ($usertype == "admin")
 		]
 	  });
 	  $('#users_table_filter').after("<br>");
+
+	  $('input[type=checkbox]').each(function(index){
+			if($(this).is(':checked')){
+				$(this).removeAttr('checked'); //unchecks it
+			}
+		});
+
+	  	$('input[type=text]').each(function(index){
+			$(this).val("");
+		});
+
 	});
 
 	var checkedCount = 0;
@@ -157,7 +169,7 @@ if ($usertype == "admin")
 		}
 		if(checkedCount <= 0)
 		{
-			alert("Please select a student to enroll.")
+			alert("Please select a user to enroll.")
 			return false;
 		}
 		return true;
@@ -182,13 +194,38 @@ if ($usertype == "admin")
 	//If the Change Password button is hit, none of the relevant password boxes should be blank.
 	function clickPassword()
 	{
-		//I'll get back to this.
+		var ret = true;
+
+		//check that passwords are provided for all check boxes
+		$('input[type=checkbox]').each(function(index){
+			if($(this).is(':checked')){
+				var pwd_id = "#password_" + $(this).val();
+				if ($(pwd_id).val() == ""){
+					alert("Please specify a new password for all selected entries.");
+					ret = false;
+				}
+			}
+		});
+
+
+		$('input[type=text]').each(function(index){
+			var name = $(this).attr("name");
+			if (typeof(name) !== "undefined" && name == "password[]" && $(this).val() != ""){
+				var box_id = "#check_" + $(this).attr("title");
+				if (!($(box_id).is(':checked'))){
+					alert("Please check all boxes for which you would like to specify a new password.");
+					ret = false;
+				}
+			} 
+		});
+
 		if(checkedCount <= 0)
 		{
-			alert("Please select the users who's passwords you are changing.")
-			return false;
+			alert("Please select a password to change.")
+			ret = false;
 		}
-		return true;
+
+		return ret;
 	}
 	
 

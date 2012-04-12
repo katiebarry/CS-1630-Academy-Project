@@ -108,12 +108,13 @@
 
 		foreach ($lines as $line)
 		{
+			$line = trim($line);
 			$linesplit = explode(",",$line);
 
 			if (!insert_class($linesplit))
 			{
 				if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
-				$_SESSION["creation-message-error"] .= "Error adding the following line: $line<br>";
+				$_SESSION["creation-message-error"] .= "Error adding the following line: $line.<br>";
 				$success = false;
 			}
 		}
