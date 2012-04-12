@@ -85,7 +85,7 @@
 		<?
 		unset($_SESSION["edit_assignment_success"]);
 	}
-	elseif (isset($_SESSION["edit_assignment_error"]))
+	if (isset($_SESSION["edit_assignment_error"]))
 	{
 		echo "<div class='message-wrapper'><div id='assignment-creation-message' class='warning message'>".$_SESSION["edit_assignment_error"]."<br></div></div>";
 		?>

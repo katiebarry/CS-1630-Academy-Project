@@ -71,6 +71,7 @@ if ($usertype == "admin")
 	<input type="submit" name="modifySubmit" onclick="return clickEnroll();" value="Enroll"/>&nbsp;
 	<input type="submit" name="modifySubmit" onclick="return clickDelete();" value="Delete Users"/>&nbsp;
 	<input type="submit" name="modifySubmit" onclick="return clickPassword();" value="Change Passwords"/>&nbsp;
+	<input type='button' value='Toggle All' onclick='toggleAll()'>&nbsp;
 	<input type="reset" value="Reset">
 	<? add_token(); ?>
 	<br />
@@ -144,6 +145,22 @@ if ($usertype == "admin")
 	});
 
 	var checkedCount = 0;
+
+	function toggleAll()
+	{
+		$('input[type=checkbox]').each(function(index) {
+			if($(this).is(':checked'))
+			{
+				$(this).removeAttr('checked'); //unchecks it
+				checkedCount--;
+			}
+			else
+			{
+				$(this).attr('checked','checked'); //turns them on
+				checkedCount++;
+			}
+		});
+	}
 	
 	//Keeps track of how many checkboxes are checked, so that we can refuse to submit a page with none checked.
 	function checkClick(id_num)

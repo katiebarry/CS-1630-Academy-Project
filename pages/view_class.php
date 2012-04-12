@@ -58,7 +58,7 @@
 								</script>
 							<?
 						}
-						elseif (isset($_SESSION["creation-message-error"]))
+						if (isset($_SESSION["creation-message-error"]))
 						{
 							echo "<div class='message-wrapper'><div id='class-creation-message' class='warning message'>".$_SESSION["creation-message-error"]."<br></div></div>";
 							unset($_SESSION["creation-message-error"]);
@@ -84,7 +84,7 @@
 							<?
 
 						}
-						elseif(isset($_SESSION["delete_failure"]))
+						if(isset($_SESSION["delete_failure"]))
 						{
 							echo "<div class='message-wrapper'><div id='class-deletion-message' class='warning message'>".$_SESSION["delete_failure"]."<br></div></div>";
 							unset($_SESSION["delete_failure"]);

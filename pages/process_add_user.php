@@ -80,28 +80,27 @@
         	return false;
 		}
 
-		$lines = file(CLASS_PATH . "CSVUploads/" . $filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-		if (empty($lines))
+		$handle = fopen(CLASS_PATH . "CSVUploads/" . $filename, "r");
+		if (empty($handle))
 		{
 			$_SESSION["aur"]["success"] = false;
         	$_SESSION["aur"]["message"] = "No entries found in file.";
 			return false;
 		}
 
-		if (count(explode(",",$lines[0])) != 4)
-		{
-			$_SESSION["aur"]["success"] = false;
-        	$_SESSION["aur"]["message"] = "Data format in .csv file is invalid.";
-			return false;
-		}
-
 		$success = true;
 
-		foreach ($lines as $line)
+		$linesplit = fgetcsv($handle);
+
+		while (!empty($linesplit))
 		{
-			$line = trim($line);
-			$linesplit = explode(",",$line);	
+			$line = implode(",", $linesplit);
+			if (count($linesplit) != 4)
+			{
+				$_SESSION["aur"]["success"] = false;
+        		$_SESSION["aur"]["message"] = "Data format in .csv file is invalid.";
+				return false;
+			}
 
 			if (!insert_user($linesplit))
 			{
@@ -113,7 +112,9 @@
 				
 				$success = false;
 			}
+			$linesplit = fgetcsv($handle);
 		}
+		fclose($handle);
 
 		if ($success)
 		{
@@ -128,9 +129,9 @@
 	function insert_user($linesplit)
 	{
 		global $db;
-		$username = trim($linesplit[0]);
-		$email = trim($linesplit[1]);
-		$usertype = trim($linesplit[2]);
+		$username = sqlite_escape_string(trim($linesplit[0]));
+		$email = sqlite_escape_string(trim($linesplit[1]));
+		$usertype = sqlite_escape_string(trim($linesplit[2]));
 
 		if (!($usertype == "teacher" || $usertype == "student" || $usertype == "admin"))
 		{
