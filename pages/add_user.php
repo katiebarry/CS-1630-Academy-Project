@@ -18,7 +18,7 @@
 ?>
 	
 	<h1>Add User</h1>
-	<div id='results-message' class='message' style='display: none;'></div>
+	<div class='message-wrapper' style='display: none;'><div id='results-message' class='message'></div></div>
 	<hr>
 	<h2>Add Single User</h2>
 	<form id='single' name="adduserform" method="POST" action="process_add_user.php">
@@ -104,13 +104,13 @@
 			}
 				?>	
 					$('#results-message').html("<?= $_SESSION["aur"]["message"] ?>");
-					$('#results-message').show("slow");
-					setTimeout(function(){
-						$('#results-message').hide('slow');
-						$('#results-message').css("display","none");
+					$('.message-wrapper').show("slow");
+					$(".message-wrapper").click(function(){
+						$(this).hide('slow');
+						$(this).css("display","none");
 						$('#results-message').html("");
 						$('#results-message').attr("class","message");
-					},2500);
+					});
 				<?
 			
 			unset($_SESSION["aur"]);

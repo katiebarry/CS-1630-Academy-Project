@@ -33,10 +33,8 @@
 				{
 					$_SESSION["delete-classes-message-error"] = "Error deleting class_id $class_id: $error";
 					return_to(HOME_DIR."pages/view_classes.php");
-				}
-				
-				//not necessary because the forign key cascades deletes - in other words, the database does this automatically
-				/*else
+				}				
+				else
 				{
 					//Let's count the classes deleted so the admin can visually compare that to how many he meant to delete.
 					$count_deleted++;
@@ -49,7 +47,7 @@
 						$_SESSION["delete-classes-message-error"] = "Error deleting entry from Enrollment table: $error";
 						return_to(HOME_DIR."pages/view_classes.php");
 					}
-				}*/
+				}
 			}
 			if($count_deleted == 1)
 			{

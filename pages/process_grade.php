@@ -150,6 +150,10 @@
 									<td style='width: 250px; vertical-align: top;'><b>Comments:</b></td>
 									<td>$comment</td>
 								</tr>
+								<tr>
+									<td style='width: 250px;'><b>Total:</b></td>
+									<td>$Total/70</td>
+								</tr>
 								</table>
 								<br><br>
 							</div>

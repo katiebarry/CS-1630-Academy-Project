@@ -24,8 +24,6 @@
 		if($requested_action == "Enroll")
 		{
 			$class_id = sqlite_escape_string($_POST['class_id']);
-			$_SESSION["modify-message-error"] = "";
-			$_SESSION["modify-message"] = "";
 
 			for($i=0; $i < $count; $i++)
 			{
@@ -36,22 +34,26 @@
 				@$result = $db->queryExec($query, $error);
 				if (empty($result) || $error)
 				{
-					$_SESSION["modify-message-error"] .= "Error enrolling user $user_id into class $class_id: $error<br>";
+					if (!isset($_SESSION["modify-message-error"])): $_SESSION["modify-message-error"] = ""; endif;
+					$_SESSION["modify-message-error"] .= "Error enrolling user $user_id into class $class_id: $error";
+					if ($i != $count-1)
+					{
+						$_SESSION["modify-message-error"] .= "<br>";
+					}
 				}
 				else
 				{
-					$_SESSION["modify-message"] .= "User $user_id successfully enrolled in $class_id.<br>";
+					if (!isset($_SESSION["modify-message"])): $_SESSION["modify-message"] = ""; endif;
+					$_SESSION["modify-message"] .= "User $user_id successfully enrolled in $class_id.";
+					if ($i != $count-1)
+					{
+						$_SESSION["modify-message"] .= "<br>";
+					}
 				}
 			}
 
-			if ($_SESSION["modify-message"] == ""): unset($_SESSION["modify-message"]); endif;
-			if ($_SESSION["modify-message-error"] == ""): unset($_SESSION["modify-message"]); endif;
-
 			return_to(HOME_DIR."pages/modify_users.php");		
 		}
-		/**
-		Fixed until here.
-		**/
 		elseif($requested_action == "Delete Users")
 		{
 			for($i=0; $i < $count; $i++)
@@ -59,80 +61,115 @@
 				//This is the man we wanted! Delete him!
 				$user_id = $checked[$i];
 				$query = "delete from User where user_id = $user_id";
-				$result = $db->queryExec($query, $error);
-				if (empty($result))
+				
+				@$result = $db->queryExec($query, $error);
+				if (empty($result) || $error)
 				{
-					$_SESSION["modify-message-error"] = "Error deleting user: $error";
-					return_to(HOME_DIR."pages/modify_users.php");
+					if (!isset($_SESSION["modify-message-error"])): $_SESSION["modify-message-error"] = ""; endif;
+					$_SESSION["modify-message-error"] .= "Error deleting user: $error";
+					if ($i != $count-1)
+					{
+						$_SESSION["modify-message-error"] .= "<br>";
+					}
 				}
 				else
 				{
-					//Great success! Let's continue!
+					@$result = $db->queryExec("delete from Enrollment where user_id='$user_id'", $error);
+					if (empty($result) || $error)
+					{
+						if (!isset($_SESSION["modify-message-error"])): $_SESSION["modify-message-error"] = ""; endif;
+						$_SESSION["modify-message-error"] .= "Error deleting user: $error";
+						if ($i != $count-1)
+						{
+							$_SESSION["modify-message-error"] .= "<br>";
+						}
+					}
+					else
+					{
+						if (!isset($_SESSION["modify-message"])): $_SESSION["modify-message"] = ""; endif;
+						$_SESSION["modify-message"] .= "Successfully deleted user $user_id.";
+						if ($i != $count-1)
+						{
+							$_SESSION["modify-message"] .= "<br>";
+						}
+					}
 				}
 			}
-			$_SESSION["modify-message"] = "Users successfully deleted.";
+
 			return_to(HOME_DIR."pages/modify_users.php");
 		}
 		elseif($requested_action == "Change Passwords")
 		{
 			//php seems to insist the blank boxes have values, so we have to check ourselves
 			$all_password =  $_POST['password'];
-			$num_all = count($all_password);
-			for($i = 0; $i < $num_all; $i++)  
+
+			foreach ($all_password as $key => $password)
 			{
-				//here we iterate through all the passwords and eliminate the ones that are just whitespace
-				if(strlen(trim($all_password[$i])) < 1)
-					unset($all_password[$i]);
+				if(strlen(trim($all_password[$key])) < 1)
+				{
+					unset($all_password[$key]);
+				}
 			}
+
 			if(empty($all_password))
 			{
 				//This should not happen due to client-side checking.
 				$_SESSION["modify-message-error"] = "No new passwords given.";
 				return_to(HOME_DIR."pages/modify_users.php");
 			}
-			else
+
+			$count = 0;
+
+			end($all_password);
+			$last = key($all_password);
+			reset($all_password);
+
+			foreach ($all_password as $key => $raw_pass)
 			{
-				$count_passwords = count($all_password);
-				if($count != $count_passwords)
+				$user_id = $checked[$count];
+				$salt = make_salt();
+				$pass = crypt($raw_pass, '$5$'.$salt);
+				$query = "update User set password = '$pass', salt = '$salt' where user_id = '$user_id'";				
+				
+				@$result = $db->queryExec($query, $error);
+				if (empty($result) || $error)
 				{
-					$_SESSION["modify-message-error"] = "New passwords do not match up with checked boxes. count $count count_passwords $count_passwords";
-					return_to(HOME_DIR."pages/modify_users.php");
+					if (!isset($_SESSION["modify-message-error"])): $_SESSION["modify-message-error"] = ""; endif;
+					$_SESSION["modify-message-error"] .= "Error updating password: $error";
+					if ($key != $last)
+					{
+						$_SESSION["modify-message-error"] .= "<br>";
+					}
 				}
 				else
 				{
-					//One of the tasks we must do in changing their passwords is creating a random salt for each one and storing this in the table.
-					for($i=0; $i < $count; $i++)
+					if (!isset($_SESSION["modify-message"])): $_SESSION["modify-message"] = ""; endif;
+					$_SESSION["modify-message"] .= "Successfully updated password for user $user_id.";
+					if ($key != $last)
 					{
-						$pass = $all_password[$i];
-						$user_id = $checked[$i];
-						//I'm using the same technique here as was used in glue.php to create the tokens
-						$characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-						$length = strlen($characters);
-						$salt = '$5$';
-						for ($x=0; $x<16; $x++)
-						{
-							$salt .= $characters[rand(0,$length-1)];
-						}
-						//Now we salt the given password
-						$pass = crypt($pass, $salt); //IMPORTANT: $5$ indicates that SHA-256 is to be used.  Salt MUST be in single quotes.
-						//Check with Rafe that the above salting was done correctly.
-						$query = "update User set password = '$pass', salt = '$salt' where user_id = '$user_id'";
-						$result = $db->queryExec($query, $error);
-						if (empty($result))
-						{
-							$_SESSION["modify-message-error"] = "Error updating password: $error";
-							return_to(HOME_DIR."pages/modify_users.php");
-							//as is, it aborts entire batch if one fails. Is this how it should behave?
-						}
-						else
-						{
-							//Great success! Let's continue!
-						}
+						$_SESSION["modify-message"] .= "<br>";
 					}
 				}
+				
+				$count++;
 			}
-			$_SESSION["modify-message"] = "Passwords successfully changed.";
+
 			return_to(HOME_DIR."pages/modify_users.php");
 		}
+	}
+
+	function make_salt()
+	{
+		$characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+		$length = strlen($characters);
+		$salt = "";
+
+		for ($x=0; $x<16; $x++)
+		{
+
+			$salt .= $characters[rand(0,$length-1)];
+		}
+
+		return $salt;
 	}
 ?>

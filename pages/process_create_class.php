@@ -90,25 +90,26 @@
         	return false;
 		}
 
-		$lines = file(CLASS_PATH . "CSVUploads/" . $filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-		if (empty($lines))
+		$handle = fopen(CLASS_PATH . "CSVUploads/" . $filename, "r");
+		if (empty($handle))
 		{
-			$_SESSION["creation-message-error"] = "Error creating class: No entries found in file.";
-        	return false;
-		}
-
-		if (count(explode(",",$lines[0])) != 4)
-		{
-			$_SESSION["creation-message-error"] = "Error creating class: Data format in .csv file is invalid.";
-        	return false;	
+			$_SESSION["aur"]["success"] = false;
+        	$_SESSION["aur"]["message"] = "No entries found in file.";
+			return false;
 		}
 
 		$success = true;
+		$lines = 0;
+		$linesplit = fgetcsv($handle);
 
-		foreach ($lines as $line)
+		while (!empty($linesplit))
 		{
-			$linesplit = explode(",",$line);
+			$line = implode(",", $linesplit);
+			if (count($linesplit) != 4)
+			{
+				$_SESSION["creation-message-error"] = "Error creating class: Data format in .csv file is invalid.";
+        		return false;
+			}
 
 			if (!insert_class($linesplit))
 			{
@@ -116,18 +117,24 @@
 				$_SESSION["creation-message-error"] .= "Error adding the following line: $line<br>";
 				$success = false;
 			}
+			else
+			{
+				$lines++;
+			}
+			$linesplit = fgetcsv($handle);
 		}
+		fclose($handle);
 
 		if ($success)
 		{
 
-			if(count($lines) == 1)
+			if($lines == 1)
 			{
 				$_SESSION["creation-message"] = "1 class successfully created.";
 			} 
 			else
 			{
-				$_SESSION["creation-message"] = count($lines) . " classes successfully created.";	
+				$_SESSION["creation-message"] = $lines . " classes successfully created.";	
 			} 
 		}
 
@@ -143,12 +150,14 @@
 		$results = $db->arrayQuery($query);
 		if(empty($results))//email is not found in the User's database
 		{
-			$_SESSION["creation-message-error"] = "Error creating class: instructor with email \"$email\" not found";
+			if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+			$_SESSION["creation-message-error"] .= "Error creating class: instructor with email \"$teacher_email\" not found<br>";
 			return false;
 		}
 		elseif ($results[0]['usertype'] != "teacher") 
 		{
-			$_SESSION["creation-message-error"] = "Error creating class: instructor email not valid - $email";
+			if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+			$_SESSION["creation-message-error"] .= "Error creating class: instructor email not valid - $teacher_email<br>";
 			return false;
 		}
 		else
@@ -156,23 +165,25 @@
 			$teacher_id = $results[0]['user_id'];
 		}
 
-		$class_name = trim($linesplit[0]);
-		$room = trim($linesplit[2]);
-		$description = nl2br(trim($linesplit[3]));
+		$class_name = sqlite_escape_string(trim($linesplit[0]));
+		$room = sqlite_escape_string(trim($linesplit[2]));
+		$description = sqlite_escape_string(nl2br(trim($linesplit[3])));
 		$query = "insert into Class values (NULL, '$class_name', '$teacher_id', '$teacher_email', '$room', '$description')";
 		@$result = $db->queryExec($query, $error);
 		if (empty($result) || $error)
 		{
-			$_SESSION["creation-message-error"] = "Error inserting class into database: $error";
+			if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+			$_SESSION["creation-message-error"] .= "Error inserting class into database: $error<br>";
 			return false;
 		}
 
 		$class_id = $db->lastInsertRowid();
 
-		@$results = $db->queryExec("insert into Enrollment values ('$class_id','$instructor_id')", $error);
+		@$results = $db->queryExec("insert into Enrollment values ('$class_id','$teacher_id')", $error);
 		if (empty($results) || $error)
 		{
-			$_SESSION["creation-message-error"] = "Error enrolling instructor in course: $error";
+			if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+			$_SESSION["creation-message-error"] .= "Error enrolling instructor in course: $error<br>";
 			return false;
 		}
 

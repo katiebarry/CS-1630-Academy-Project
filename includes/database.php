@@ -22,11 +22,12 @@ if ($db && $testing)
     query("
             create table 'Class' (
                 'class_id' integer primary key,
-                'class_name' int not null,
+                'class_name' text not null,
                 'instructor_id' int not null,
                 'instructor_email' text not null,
                 'room' text,
-                'description' text
+                'description' text,
+                unique (class_name, instructor_email, instructor_id)
             )
         ");
     query("
@@ -40,7 +41,7 @@ if ($db && $testing)
                 'late_due_date' text not null,
                 'is_open' int(1) default 1,
                 'num_files_required' int,
-                foreign key ('class_id') references 'Class' ('class_id') on delete cascade
+                foreign key (class_id) references Class (class_id) on delete cascade
             )
         ");
     query("

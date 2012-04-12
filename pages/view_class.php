@@ -48,51 +48,51 @@
 					{
 						if (isset($_SESSION["creation-message"]))
 						{
-							echo "<div id='class-creation-message' class='info message'>".$_SESSION["creation-message"]."<br></div>";
+							echo "<div class='message-wrapper'><div id='class-creation-message' class='info message'>".$_SESSION["creation-message"]."<br></div></div>";
 							unset($_SESSION["creation-message"]);
 							?>
 								<script>
-									setTimeout(function(){
-										$('#class-creation-message').hide("slow");
-									}, 2000);
+									$('.message-wrapper').click(function(){
+										$(this).hide("slow");
+									})
 								</script>
 							<?
 						}
-						elseif (isset($_SESSION["creation-message-error"]))
+						if (isset($_SESSION["creation-message-error"]))
 						{
-							echo "<div id='class-creation-message' class='warning message'>".$_SESSION["creation-message-error"]."<br></div>";
+							echo "<div class='message-wrapper'><div id='class-creation-message' class='warning message'>".$_SESSION["creation-message-error"]."<br></div></div>";
 							unset($_SESSION["creation-message-error"]);
 							?>
 								<script>
-									setTimeout(function(){
-										$('#class-creation-message').hide("slow");
-									}, 2000);
+									$('.message-wrapper').click(function(){
+										$(this).hide("slow");
+									})
 								</script>
-							<?	
+							<?
 						}
 
 						if(isset($_SESSION["delete_success"]))
 						{
-							echo "<div id='class-deletion-message' class='info message'>".$_SESSION["delete_success"]."<br></div>";
+							echo "<div class='message-wrapper'><div id='class-deletion-message' class='info message'>".$_SESSION["delete_success"]."<br></div></div>";
 							unset($_SESSION["delete_success"]);
 							?>
 								<script>
-									setTimeout(function(){
-										$('#class-deletion-message').hide("slow");
-									}, 2000);
+									$('.message-wrapper').click(function(){
+										$(this).hide("slow");
+									})
 								</script>
 							<?
 
 						}
-						elseif(isset($_SESSION["delete_failure"]))
+						if(isset($_SESSION["delete_failure"]))
 						{
-							echo "<div id='class-deletion-message' class='warning message'>".$_SESSION["delete_failure"]."<br></div>";
+							echo "<div class='message-wrapper'><div id='class-deletion-message' class='warning message'>".$_SESSION["delete_failure"]."<br></div></div>";
 							unset($_SESSION["delete_failure"]);
 							?>
 								<script>
-									setTimeout(function(){
-										$('#class-deletion-message').hide("slow");
-									}, 2000);
+									$('.message-wrapper').click(function(){
+										$(this).hide("slow");
+									})
 								</script>
 							<?
 						}

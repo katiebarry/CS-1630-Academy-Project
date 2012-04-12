@@ -1,0 +1,9 @@
+Enter the starting number > Enter the ending number > the prime numbers between 10 and 40 is:
+11
+13
+16
+19
+23
+28
+31
+37

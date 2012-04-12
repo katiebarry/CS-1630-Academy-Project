@@ -13,27 +13,27 @@
 	{
 		if (isset($_SESSION["delete-classes-message"]))
 		{
-			echo "<div id='class-delete-classes-message' class='info message'>".$_SESSION["delete-classes-message"]."<br></div>";
+			echo "<div class='message-wrapper'><div id='class-delete-classes-message' class='info message'>".$_SESSION["delete-classes-message"]."<br></div></div>";
 			unset($_SESSION["delete-classes-message"]);
 			?>
 				<script>
-					setTimeout(function(){
-						$('#class-delete-classes-message').hide("slow");
-					}, 2000);
+					$('.message-wrapper').click(function(){
+						$(this).hide("slow");
+					})
 				</script>
 			<?
 		}
-		elseif (isset($_SESSION["delete-classes-message-error"]))
+		if (isset($_SESSION["delete-classes-message-error"]))
 		{
-			echo "<div id='class-delete-classes-message' class='warning message'>".$_SESSION["delete-classes-message-error"]."<br></div>";
+			echo "<div class='message-wrapper'><div id='class-delete-classes-message' class='warning message'>".$_SESSION["delete-classes-message-error"]."<br></div></div>";
 			unset($_SESSION["delete-classes-message-error"]);
 			?>
 				<script>
-					setTimeout(function(){
-						$('#class-delete-classes-message').hide("slow");
-					}, 2000);
+					$('.message-wrapper').click(function(){
+						$(this).hide("slow");
+					})
 				</script>
-			<?	
+			<?
 		}
 	}	
 	
@@ -45,6 +45,7 @@
 		?>
 		<form id="delete_classes" method="post" action="process_delete_classes.php" >
 		<input type="submit" name="delete_classesSubmit" onclick="return clickDelete()" value="Delete Classes"/>&nbsp;
+		<input type='button' onclick='toggleAll()' value='Toggle All'/>&nbsp;
 		<input type="reset" value="Reset">
 		<? add_token(); ?>
 		<br />
@@ -95,6 +96,22 @@
 		  
 		var checkedCount = 0;
 		
+		function toggleAll()
+		{
+			$('input[type=checkbox]').each(function(index) {
+				if($(this).is(':checked'))
+				{
+					$(this).removeAttr('checked'); //unchecks it
+					checkedCount--;
+				}
+				else
+				{
+					$(this).attr('checked','checked'); //turns them on
+					checkedCount++;
+				}
+			});
+		}
+
 		//Keeps track of how many checkboxes are checked, so that we can refuse to submit a page with none checked.
 		function checkClick(id_num)
 		{

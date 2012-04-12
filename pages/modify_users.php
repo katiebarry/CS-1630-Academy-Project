@@ -18,7 +18,7 @@ else
 { //Now we pull the data for the table from the database.
 	//This should be enough to initially populate the table.
 	$results = $db->arrayQuery("select user_id, username, email, usertype from User");
-	$classes = $db->arrayQuery("select class_id, class_name from Class");
+	$classes = $db->arrayQuery("select class_id, class_name from Class, User where User.user_id = Class.instructor_id");
 	//Change needed:
 	//May need another request to verify changes, such as having the enrollment table to approve/deny enrollment changes
 	
@@ -27,25 +27,26 @@ if ($usertype == "admin")
 {
 	if (isset($_SESSION["modify-message"]))
 	{
-		echo "<div id='class-modify-message' class='info message'>".$_SESSION["modify-message"]."<br></div>";
+		echo "<div class='message-wrapper'><div id='class-modify-message' class='info message'>".$_SESSION["modify-message"]."<br></div></div>";
 		unset($_SESSION["modify-message"]);
 		?>
 			<script>
-				setTimeout(function(){
-					$('#class-modify-message').hide("slow");
-				}, 2000);
+				$('.message-wrapper').click(function(){
+					$(this).hide("slow");
+				})
 			</script>
 		<?
 	}
-	elseif (isset($_SESSION["modify-message-error"]))
+	
+	if (isset($_SESSION["modify-message-error"]))
 	{
-		echo "<div id='class-modify-message' class='warning message'>".$_SESSION["modify-message-error"]."<br></div>";
+		echo "<div class='message-wrapper'><div id='class-modify-message' class='warning message'>".$_SESSION["modify-message-error"]."<br></div></div>";
 		unset($_SESSION["modify-message-error"]);
 		?>
 			<script>
-				setTimeout(function(){
-					$('#class-modify-message').hide("slow");
-				}, 2000);
+				$('.message-wrapper').click(function(){
+					$(this).hide("slow");
+				})
 			</script>
 		<?	
 	}
@@ -54,7 +55,7 @@ if ($usertype == "admin")
 ?>
 
 <!-- Now we have the HTML for displaying the table. After this works, add on DataTables -->
-<h1>Modify Users</h1>
+<h1>View Users</h1>
 <!-- TODO: create page process_modify_users.php (or do it another way, inline?) and function (below) submit_modify_users -->
 <!-- onsubmit="return submit_modify_users()" -->
 
@@ -67,9 +68,10 @@ if ($usertype == "admin")
 		}
 		?>
 	</select>
-	<input type="submit" name="modifySubmit" onclick="return clickEnroll()" value="Enroll"/>&nbsp;
-	<input type="submit" name="modifySubmit" onclick="return clickDelete()" value="Delete Users"/>&nbsp;
-	<input type="submit" name="modifySubmit" onclick="return clickPassword()" value="Change Passwords"/>&nbsp;
+	<input type="submit" name="modifySubmit" onclick="return clickEnroll();" value="Enroll"/>&nbsp;
+	<input type="submit" name="modifySubmit" onclick="return clickDelete();" value="Delete Users"/>&nbsp;
+	<input type="submit" name="modifySubmit" onclick="return clickPassword();" value="Change Passwords"/>&nbsp;
+	<input type='button' value='Toggle All' onclick='toggleAll()'>&nbsp;
 	<input type="reset" value="Reset">
 	<? add_token(); ?>
 	<br />
@@ -103,7 +105,7 @@ if ($usertype == "admin")
 			  //First we have the particular user's name and usertype.
 			  echo "<td>{$entry['username']}</td><td>{$entry['email']}</td><td>{$entry['usertype']}</td>";
 			  //Now we get a text input box for inputing a new password. 
-			  echo "<td><input type='text' name='password[]' id='password_$id' style='width: 100px;'/></td>"; 
+			  echo "<td><input type='text' name='password[]' id='password_$id' style='width: 100px;' title='$id'/></td>"; 
 			  echo "</tr>\n";     
 			} 
 			?>
@@ -129,9 +131,36 @@ if ($usertype == "admin")
 		]
 	  });
 	  $('#users_table_filter').after("<br>");
+
+	  $('input[type=checkbox]').each(function(index){
+			if($(this).is(':checked')){
+				$(this).removeAttr('checked'); //unchecks it
+			}
+		});
+
+	  	$('input[type=text]').each(function(index){
+			$(this).val("");
+		});
+
 	});
 
 	var checkedCount = 0;
+
+	function toggleAll()
+	{
+		$('input[type=checkbox]').each(function(index) {
+			if($(this).is(':checked'))
+			{
+				$(this).removeAttr('checked'); //unchecks it
+				checkedCount--;
+			}
+			else
+			{
+				$(this).attr('checked','checked'); //turns them on
+				checkedCount++;
+			}
+		});
+	}
 	
 	//Keeps track of how many checkboxes are checked, so that we can refuse to submit a page with none checked.
 	function checkClick(id_num)
@@ -157,7 +186,7 @@ if ($usertype == "admin")
 		}
 		if(checkedCount <= 0)
 		{
-			alert("Please select a student to enroll.")
+			alert("Please select a user to enroll.")
 			return false;
 		}
 		return true;
@@ -182,13 +211,38 @@ if ($usertype == "admin")
 	//If the Change Password button is hit, none of the relevant password boxes should be blank.
 	function clickPassword()
 	{
-		//I'll get back to this.
+		var ret = true;
+
+		//check that passwords are provided for all check boxes
+		$('input[type=checkbox]').each(function(index){
+			if($(this).is(':checked')){
+				var pwd_id = "#password_" + $(this).val();
+				if ($(pwd_id).val() == ""){
+					alert("Please specify a new password for all selected entries.");
+					ret = false;
+				}
+			}
+		});
+
+
+		$('input[type=text]').each(function(index){
+			var name = $(this).attr("name");
+			if (typeof(name) !== "undefined" && name == "password[]" && $(this).val() != ""){
+				var box_id = "#check_" + $(this).attr("title");
+				if (!($(box_id).is(':checked'))){
+					alert("Please check all boxes for which you would like to specify a new password.");
+					ret = false;
+				}
+			} 
+		});
+
 		if(checkedCount <= 0)
 		{
-			alert("Please select the users who's passwords you are changing.")
-			return false;
+			alert("Please select a password to change.")
+			ret = false;
 		}
-		return true;
+
+		return ret;
 	}
 	
 

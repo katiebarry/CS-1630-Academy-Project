@@ -20,27 +20,27 @@
 	{
 		if (isset($_SESSION["creation-message"]))
 		{
-			echo "<div id='class-creation-message' class='info message'>".$_SESSION["creation-message"]."<br></div>";
+			echo "<div class='message-wrapper'><div id='class-creation-message' class='info message'>".$_SESSION["creation-message"]."<br></div></div>";
 			unset($_SESSION["creation-message"]);
 			?>
 				<script>
-					setTimeout(function(){
-						$('#class-creation-message').hide("slow");
-					}, 2000);
+					$('.message-wrapper').click(function(){
+						$(this).hide("slow");
+					})
 				</script>
 			<?
 		}
-		elseif (isset($_SESSION["creation-message-error"]))
+		if (isset($_SESSION["creation-message-error"]))
 		{
-			echo "<div id='class-creation-message' class='warning message'>".$_SESSION["creation-message-error"]."<br></div>";
+			echo "<div class='message-wrapper'><div id='class-creation-message' class='warning message'>".$_SESSION["creation-message-error"]."<br></div></div>";
 			unset($_SESSION["creation-message-error"]);
 			?>
 				<script>
-					setTimeout(function(){
-						$('#class-creation-message').hide("slow");
-					}, 2000);
+					$('.message-wrapper').click(function(){
+						$(this).hide("slow");
+					})
 				</script>
-			<?	
+			<?
 		}
 	}	
 	
