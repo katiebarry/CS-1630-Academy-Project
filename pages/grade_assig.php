@@ -108,9 +108,9 @@
 	$assig_path = preg_replace("/\ /", '_', $assignment_title)."-".$assignment["assignment_id"];	
 
 	echo "<h1>Grading $assignment_title</h1>";
-	echo "<div class='message-wrapper'><div id='success-message' class='info message' style='display: none;'>Grade Successfully Submitted</div></div>";
-	echo "<div class='message-wrapper'><div id='failure-message' class='warning message' style='display: none;'>Error Submitting Grade</div></div>";
-	echo "<div class='message-wrapper'><div id='caution-message' class='caution message' style='display: none;'>Grade May Not Have Been Submitted</div></div>";
+	echo "<div class='message-wrapper' id='success-message' style='display: none;'><div class='info message'>Grade Successfully Submitted</div></div>";
+	echo "<div class='message-wrapper' id='failure-message' style='display: none;'><div class='warning message'>Error Submitting Grade</div></div>";
+	echo "<div class='message-wrapper' id='caution-message' style='display: none;'><div class='caution message'>Grade May Not Have Been Submitted</div></div>";
 
 
 	if(!is_dir(BASE_PATH.$class_path))
@@ -189,7 +189,7 @@
 			$linenum = 0;
 			foreach ($lines as $line)
 			{
-				echo "$linenum: &nbsp;&nbsp;&nbsp;".strip_tags(trim($line);
+				echo "$linenum: &nbsp;&nbsp;&nbsp;".strip_tags($line);
 				$linenum++;
 			}
 

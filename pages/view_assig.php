@@ -229,9 +229,9 @@ function print_current_files()
 	$course_title = $results[0]["class_name"];
 
 	echo "<h2>View Files:</h2>";
-	echo "<div class='message-wrapper'><div id='success-message' class='info message' style='display: none;'>File Successfully Deleted</div></div>";
-	echo "<div class='message-wrapper'><div id='failure-message' class='warning message' style='display: none;'>Error Deleting File</div></div>";
-	echo "<div class='message-wrapper'><div id='caution-message' class='caution message' style='display: none;'>File may not have been deleted.  Please reload page.</div></div>";
+	echo "<div class='message-wrapper' id='success-message' style='display: none;'><div class='info message'>File Successfully Deleted</div></div>";
+	echo "<div class='message-wrapper' id='failure-message' style='display: none;'><div class='warning message'>Error Deleting File</div></div>";
+	echo "<div class='message-wrapper' id='caution-message' style='display: none;'><div class='caution message'>File may not have been deleted.  Please reload page.</div></div>";
 	echo "<br>";
 	$student_path = BASE_PATH.preg_replace("/ /", "_", $course_title)."-".$class_id."/".preg_replace("/ /", "_", $title)."-".$assignment_id."/".preg_replace("/ /", "_", $_SESSION["username"])."-".$user_id."/";
 	if (!is_dir($student_path))
@@ -268,7 +268,7 @@ function print_current_files()
 				$linenum = 0;
 				foreach ($lines as $line)
 				{
-					echo "$linenum: &nbsp;&nbsp;&nbsp;".strip_tags(trim($line));
+					echo "$linenum: &nbsp;&nbsp;&nbsp;".strip_tags($line);
 					$linenum++;
 				}
 
@@ -357,7 +357,7 @@ function print_student_js()
 					//alert("Now: " + now.getTime() + " Late: " + late.getTime());
 					alert("Sorry, assignment submission has closed.");
 
-					submit_log_entry("assignment_id=<?= $assignment_id ?>&class_id=<?= $class_id ?>&user_id=<?= $user_id ?>&username=<?= $username ?>&submission_time=" + now.getTime() + "&successful=0&commentsubmission_time=File submission attempt logged - FAILED, ASSIGNMENT CLOSED AFTER PAGE LOAD.");
+					submit_log_entry("assignment_id=<?= $assignment_id ?>&class_id=<?= $class_id ?>&user_id=<?= $user_id ?>&submission_time=" + now.getTime() + "&successful=0&commentsubmission_time=File submission attempt logged - FAILED, ASSIGNMENT CLOSED AFTER PAGE LOAD.");
 
 					return false;
 				}
@@ -368,7 +368,7 @@ function print_student_js()
 					$('#submission-form').append("<input type='hidden' name='assignment_id' value='<?= $assignment_id ?>'>");
 					$('#submission-form').append("<input type='hidden' name='late' value='true'>");
 
-					submit_log_entry("assignment_id=<?= $assignment_id ?>&class_id=<?= $class_id ?>&user_id=<?= $user_id ?>&username=<?= $username ?>&submission_time=" + now.getTime() + "&successful=1&comment=File submission attempt logged - LATE.");
+					submit_log_entry("assignment_id=<?= $assignment_id ?>&class_id=<?= $class_id ?>&user_id=<?= $user_id ?>&submission_time=" + now.getTime() + "&successful=1&comment=File submission attempt logged - LATE.");
 
 					return true;
 				}
@@ -379,7 +379,7 @@ function print_student_js()
 					$('#submission-form').append("<input type='hidden' name='assignment_id' value='<?= $assignment_id ?>'>");
 					$('#submission-form').append("<input type='hidden' name='late' value='false'>");
 
-					submit_log_entry("assignment_id=<?= $assignment_id ?>&class_id=<?= $class_id ?>&user_id=<?= $user_id ?>&username=<?= $username ?>&submission_time=" + now.getTime() + "&successful=1&comment=File submission attempt logged - ON TIME.");
+					submit_log_entry("assignment_id=<?= $assignment_id ?>&class_id=<?= $class_id ?>&user_id=<?= $user_id ?>&submission_time=" + now.getTime() + "&successful=1&comment=File submission attempt logged - ON TIME.");
 
 					return true;
 				}
@@ -409,9 +409,18 @@ function print_student_js()
 
 		function submit_log_entry(data)
 		{
-			post("update_log.php",data,function(){
-				//alert(arguments[0]);
-			});
+			$.ajax({
+				url: "update_log.php",
+				data: data,
+				type: "POST",
+				async: false,
+				success: function(data){
+							
+						},
+				error: function(jqXHR, textStatus, errorThrown){
+							
+						}
+			});	
 		}
 	</script>
 	<?

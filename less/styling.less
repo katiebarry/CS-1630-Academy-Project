@@ -34,6 +34,7 @@ table, tr{
 	background-size: 25px 25px;
 	padding-top: 15px;
 	padding-left: 15px;
+	cursor: pointer;
 }
 
 .message{
@@ -68,106 +69,6 @@ table, tr{
 	}
 }
 
-#lock-inner-contents{
-	margin: 0 auto;
-	width: 960px;
-	background-color: @light-blue;
-	.box-sizing(border-box);
-	margin-top: 50px;
-
-	#login-title{
-		width: 100%;
-		height: 100px;
-		background-color: @purple;
-		color: white;
-		margin-bottom: 100px;
-		
-		#title{
-			font-size: 30px;
-			padding-top: 15px;
-			padding-left: 15px;
-		}
-		#subtitle{
-			font-size: 18px;
-			padding-left: 15px;
-		}
-
-		img{
-			height: 75px;
-			width: 75px;
-			display: inline;
-			margin-top: -60px;
-			margin-left: 875px;
-		}
-
-	}
-
-	#bottom-bar{
-		background-color: @powder;
-		width: 100%;
-		height: 30px;
-		margin-top: 100px;
-	}
-	
-	#lock-wrapper{
-		margin: 0 auto;
-		width: 500px;
-		height: 275px;
-		background-color: white;
-		padding: 20px 20px 10px 20px;
-		border: 2px solid black;
-		.rounded(5px);
-
-		input:not(.button){
-			width: 260px;
-			margin: 0 10px;
-			.rounded(5px);
-			padding: 10px;
-			border: 2px groove @light-grey;
-		}
-
-		#buttons{
-			float: right;
-			margin-right: 75px;
-		}
-
-		#lables{
-			text-align: right;
-			width: 100px;
-			float: left;
-			margin-top: 7px;
-			margin-left: 30px;
-		}
-	}
-
-}
-
-#title-bar{
-	width: 960px;
-	height: 100px;
-	background-color: @purple;
-	color: white;
-	margin: 0 auto;
-	margin-top: 10px;
-	#title{
-		font-size: 30px;
-		padding-top: 15px;
-		padding-left: 15px;
-	}
-	#subtitle{
-		font-size: 18px;
-		padding-left: 15px;
-	}
-
-	img{
-		height: 75px;
-		width: 75px;
-		display: inline;
-		margin-top: -60px;
-		margin-left: 875px;
-	}
-}
-
 #content{
 	margin: 0 auto;
 	width: 960px;
@@ -188,6 +89,11 @@ table, tr{
 		padding-top: 10px;
 		margin-left: 200px;
 		min-height: 325px;
+
+		.help-image{
+			width: 500px;
+			height: auto !important;
+		}
 
 		#table-container{
 			width: 660px;
@@ -295,6 +201,106 @@ table, tr{
 				margin-bottom: 5px;
 			}
 		}
+	}
+}
+
+#lock-inner-contents{
+	margin: 0 auto;
+	width: 960px;
+	background-color: @light-blue;
+	.box-sizing(border-box);
+	margin-top: 50px;
+
+	#login-title{
+		width: 100%;
+		height: 100px;
+		background-color: @purple;
+		color: white;
+		margin-bottom: 100px;
+		
+		#title{
+			font-size: 30px;
+			padding-top: 15px;
+			padding-left: 15px;
+		}
+		#subtitle{
+			font-size: 18px;
+			padding-left: 15px;
+		}
+
+		img{
+			height: 75px;
+			width: 75px;
+			display: inline;
+			margin-top: -60px;
+			margin-left: 875px;
+		}
+
+	}
+
+	#bottom-bar{
+		background-color: @powder;
+		width: 100%;
+		height: 30px;
+		margin-top: 100px;
+	}
+	
+	#lock-wrapper{
+		margin: 0 auto;
+		width: 500px;
+		height: 275px;
+		background-color: white;
+		padding: 20px 20px 10px 20px;
+		border: 2px solid black;
+		.rounded(5px);
+
+		input:not(.button){
+			width: 260px;
+			margin: 0 10px;
+			.rounded(5px);
+			padding: 10px;
+			border: 2px groove @light-grey;
+		}
+
+		#buttons{
+			float: right;
+			margin-right: 75px;
+		}
+
+		#lables{
+			text-align: right;
+			width: 100px;
+			float: left;
+			margin-top: 7px;
+			margin-left: 30px;
+		}
+	}
+
+}
+
+#title-bar{
+	width: 960px;
+	height: 100px;
+	background-color: @purple;
+	color: white;
+	margin: 0 auto;
+	margin-top: 10px;
+	#title{
+		font-size: 30px;
+		padding-top: 15px;
+		padding-left: 15px;
+	}
+	#subtitle{
+		font-size: 18px;
+		padding-left: 15px;
+	}
+
+	img{
+		height: 75px;
+		width: 75px;
+		display: inline;
+		margin-top: -60px;
+		margin-left: 875px;
 	}
 }
 

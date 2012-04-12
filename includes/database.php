@@ -27,7 +27,7 @@ if ($db && $testing)
                 'instructor_email' text not null,
                 'room' text,
                 'description' text,
-                unique (class_name, instructor_email)
+                unique (class_name, instructor_email, instructor_id)
             )
         ");
     query("
