@@ -27,26 +27,26 @@ if ($usertype == "admin")
 {
 	if (isset($_SESSION["modify-message"]))
 	{
-		echo "<div id='class-modify-message' class='info message'>".$_SESSION["modify-message"]."<br></div>";
+		echo "<div class='message-wrapper'><div id='class-modify-message' class='info message'>".$_SESSION["modify-message"]."<br></div></div>";
 		unset($_SESSION["modify-message"]);
 		?>
 			<script>
-				setTimeout(function(){
-					$('#class-modify-message').hide("slow");
-				}, 2000);
+				$('.message-wrapper').click(function(){
+					$(this).hide("slow");
+				})
 			</script>
 		<?
 	}
 	
 	if (isset($_SESSION["modify-message-error"]))
 	{
-		echo "<div id='class-modify-message' class='warning message'>".$_SESSION["modify-message-error"]."<br></div>";
+		echo "<div class='message-wrapper'><div id='class-modify-message' class='warning message'>".$_SESSION["modify-message-error"]."<br></div></div>";
 		unset($_SESSION["modify-message-error"]);
 		?>
 			<script>
-				setTimeout(function(){
-					$('#class-modify-message').hide("slow");
-				}, 2000);
+				$('.message-wrapper').click(function(){
+					$(this).hide("slow");
+				})
 			</script>
 		<?	
 	}

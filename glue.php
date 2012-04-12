@@ -247,7 +247,7 @@ function lock()
 								$('#error-message').show("slow");
 								t = setTimeout(function(){
 									$('#error-message').hide("slow");
-								},2500);
+								},3500);
 							}
 						});	
 					}

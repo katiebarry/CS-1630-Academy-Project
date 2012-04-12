@@ -108,9 +108,9 @@
 	$assig_path = preg_replace("/\ /", '_', $assignment_title)."-".$assignment["assignment_id"];	
 
 	echo "<h1>Grading $assignment_title</h1>";
-	echo "<div id='success-message' class='info message' style='display: none;'>Grade Successfully Submitted</div>";
-	echo "<div id='failure-message' class='warning message' style='display: none;'>Error Submitting Grade</div>";
-	echo "<div id='caution-message' class='caution message' style='display: none;'>Grade May Not Have Been Submitted</div>";
+	echo "<div class='message-wrapper'><div id='success-message' class='info message' style='display: none;'>Grade Successfully Submitted</div></div>";
+	echo "<div class='message-wrapper'><div id='failure-message' class='warning message' style='display: none;'>Error Submitting Grade</div></div>";
+	echo "<div class='message-wrapper'><div id='caution-message' class='caution message' style='display: none;'>Grade May Not Have Been Submitted</div></div>";
 
 
 	if(!is_dir(BASE_PATH.$class_path))
@@ -227,6 +227,7 @@
 
 	?>
 		<script>
+
 		function calculateTotal(user_id){
 			var test = 0;
 			for(i = 1; i <= 8; i++){
@@ -272,21 +273,12 @@
 				post("process_grade.php",$data,function(data){
 					if (data.indexOf("error") != -1){
 						$('#failure-message').show("slow");
-						setTimeout(function(){
-							$('#failure-message').hide("slow");
-						},2500);
 					}
 					else if (data.indexOf("success") != -1){
 						$('#success-message').show("slow");
-						setTimeout(function(){
-							$('#success-message').hide("slow");
-						},2500);
 					}
 					else{
-						$('#caution-message').show("slow");
-						setTimeout(function(){
-							$('#caution-message').hide("slow");
-						},2500);	
+						$('#caution-message').show("slow");	
 					}
 				});
 				return false;
@@ -313,6 +305,12 @@
 						}
 					});
 				});
+
+
+				$('.message-wrapper').click(function(){
+					$(this).hide("slow");
+				})
+
 			});
 
 			$("#student-files").flexipage({

@@ -56,18 +56,18 @@
 
 	if (isset($_SESSION['upload_summary']))
 	{
-		echo "<div id='upload-summary' class='info message'><ol>";
+		echo "<div class='message-wrapper'><div id='upload-summary' class='info message'><ol>";
 		foreach ($_SESSION['upload_summary'] as $item)
 		{
 			echo "<li>$item</li>";
 		}
-		echo "</ol></div>";
+		echo "</ol></div></div>";
 		?>
-		<script>
-			setTimeout(function(){
-				$('#upload-summary').hide("slow");
-			}, 3000);
-		</script>
+			<script>
+				$('.message-wrapper').click(function(){
+					$(this).hide("slow");
+				})
+			</script>
 		<?
 		unset($_SESSION["upload_summary"]);
 	}
@@ -75,24 +75,24 @@
 
 	if (isset($_SESSION["edit_assignment_success"]))
 	{
-		echo "<div id='assignment-creation-message' class='info message'>".$_SESSION["edit_assignment_success"]."<br></div>";
+		echo "<div class='message-wrapper'><div id='assignment-creation-message' class='info message'>".$_SESSION["edit_assignment_success"]."<br></div></div>";
 		?>
 			<script>
-				setTimeout(function(){
-					$("#assignment-creation-message").hide("slow");
-				}, 2500);
+				$('.message-wrapper').click(function(){
+					$(this).hide("slow");
+				})
 			</script>
 		<?
 		unset($_SESSION["edit_assignment_success"]);
 	}
 	elseif (isset($_SESSION["edit_assignment_error"]))
 	{
-		echo "<div id='assignment-creation-message' class='warning message'>".$_SESSION["edit_assignment_error"]."<br></div>";
+		echo "<div class='message-wrapper'><div id='assignment-creation-message' class='warning message'>".$_SESSION["edit_assignment_error"]."<br></div></div>";
 		?>
 			<script>
-				setTimeout(function(){
-					$("#assignment-creation-message").hide("slow");
-				}, 2500);
+				$('.message-wrapper').click(function(){
+					$(this).hide("slow");
+				})
 			</script>
 		<?
 		unset($_SESSION["edit_assignment_error"]);
@@ -229,9 +229,9 @@ function print_current_files()
 	$course_title = $results[0]["class_name"];
 
 	echo "<h2>View Files:</h2>";
-	echo "<div id='success-message' class='info message' style='display: none;'>File Successfully Deleted</div>";
-	echo "<div id='failure-message' class='warning message' style='display: none;'>Error Deleting File</div>";
-	echo "<div id='caution-message' class='caution message' style='display: none;'>File may not have been deleted.  Please reload page.</div>";
+	echo "<div class='message-wrapper'><div id='success-message' class='info message' style='display: none;'>File Successfully Deleted</div></div>";
+	echo "<div class='message-wrapper'><div id='failure-message' class='warning message' style='display: none;'>Error Deleting File</div></div>";
+	echo "<div class='message-wrapper'><div id='caution-message' class='caution message' style='display: none;'>File may not have been deleted.  Please reload page.</div></div>";
 	echo "<br>";
 	$student_path = BASE_PATH.preg_replace("/ /", "_", $course_title)."-".$class_id."/".preg_replace("/ /", "_", $title)."-".$assignment_id."/".preg_replace("/ /", "_", $_SESSION["username"])."-".$user_id."/";
 	if (!is_dir($student_path))
@@ -291,7 +291,11 @@ function print_student_js()
 	?>
 	<script>
 		$(document).ready(function(){
-			
+		
+			$('.message-wrapper').click(function(){
+				$(this).hide("slow");
+			})
+
 			var current_file = "";
 
 			$('#delete-file').click(function(){
@@ -303,9 +307,6 @@ function print_student_js()
 						//there was a problem
 						if (data.indexOf("error") != -1){
 							$('#failure-message').show("slow");
-							setTimeout(function(){
-								$('#failure-message').hide("slow");
-							},2500);
 						}
 						//success
 						else if (data.indexOf("success") != -1){
@@ -321,16 +322,10 @@ function print_student_js()
 							current_file = code;
 							$(previous).remove();
 							$('#success-message').show("slow");
-							setTimeout(function(){
-								$('#success-message').hide("slow");
-							},2500);
 						}
 						//wtf
 						else{
 							$('#caution-message').show("slow");
-							setTimeout(function(){
-								$('#caution-message').hide("slow");
-							},2500);
 						}
 					});
 				}

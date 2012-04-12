@@ -1354,6 +1354,14 @@ tr th {
   padding: 5px 20px 5px 10px;
   text-align: left;
 }
+.message-wrapper {
+  background-image: url("../images/close-x.png");
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+  background-size: 25px 25px;
+  padding-top: 15px;
+  padding-left: 15px;
+}
 .message.warning {
   color: black;
   display: inline-block;

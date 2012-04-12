@@ -13,27 +13,27 @@
 	{
 		if (isset($_SESSION["delete-classes-message"]))
 		{
-			echo "<div id='class-delete-classes-message' class='info message'>".$_SESSION["delete-classes-message"]."<br></div>";
+			echo "<div class='message-wrapper'><div id='class-delete-classes-message' class='info message'>".$_SESSION["delete-classes-message"]."<br></div></div>";
 			unset($_SESSION["delete-classes-message"]);
 			?>
 				<script>
-					setTimeout(function(){
-						$('#class-delete-classes-message').hide("slow");
-					}, 2000);
+					$('.message-wrapper').click(function(){
+						$(this).hide("slow");
+					})
 				</script>
 			<?
 		}
 		elseif (isset($_SESSION["delete-classes-message-error"]))
 		{
-			echo "<div id='class-delete-classes-message' class='warning message'>".$_SESSION["delete-classes-message-error"]."<br></div>";
+			echo "<div class='message-wrapper'><div id='class-delete-classes-message' class='warning message'>".$_SESSION["delete-classes-message-error"]."<br></div></div>";
 			unset($_SESSION["delete-classes-message-error"]);
 			?>
 				<script>
-					setTimeout(function(){
-						$('#class-delete-classes-message').hide("slow");
-					}, 2000);
+					$('.message-wrapper').click(function(){
+						$(this).hide("slow");
+					})
 				</script>
-			<?	
+			<?
 		}
 	}	
 	
