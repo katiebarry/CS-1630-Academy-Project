@@ -19,19 +19,24 @@
 				</ol>
 				   
 				   <h2 id="ViewClasses">View Classes</h2>
+				   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/TeacherHelpScreenshots/ViewClasses.png " alt="ViewClasses" class="help-image"/> 
 				   <p>Using the navigation menu on the left hand side of the page you can view all classes
 				   for which you are registered as the teacher. You must be added as a teacher by a system administrator
 				   before a class will appear in your list. Clicking on the "View Classes" link will take 
 				   you to a new page containing a list of your classes. Clicking on a specific class will bring
 				   you to a page that contains that class's information including any assignments that have previously been
-				   created. From here you can choose to create an assignment, edit an assignment, or 
-				   grade an assignment.</p>
+				   created. </p>
+				   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/TeacherHelpScreenshots/ViewAssignmentList.png " alt="ViewAssigList" class="help-image"/>
+				   <p>From here you can choose to create an assignment, edit an assignment, or 
+				   grade an assignment</p>
 				   
 				   
 				   <h2 id="CreateAssignment">Creating Assignments</h2>
 				   <p>Creating an assignment can be achieved by using the link found on the left hand side of the
 				   screen in the navigation menu. This link will take you to new page containing a form that you 
-				   can fill out to specify any desired details for the assignment. You must specify for which class 
+				   can fill out to specify any desired details for the assignment.</p>
+				   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/TeacherHelpScreenshots/CreateAssignment.png " alt="CreateAssignment" class="help-image"/>
+				   <p>You must specify for which class 
 				   the assignment is intended. You may also create a new assignment by naving to the class page first. 
 				   This will allow you to create an assignment specifically for this class without having to specify a 
 				   course from the drop down. Once the desired information has been entered,
@@ -43,11 +48,14 @@
 				   </p>
 				   
 				   <h2 id="EditAssignment">Editting Assignments</h2>
+				   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/TeacherHelpScreenshots/ViewAssignment.png " alt="ViewAssignment" class="help-image"/>
 				   <p>In order to edit an already existing assignment you must 
 				   navigate to a particular class and then choose the desired assignment
 				   from the list of previously created assignments. Once you have chosen the assignment you wish to 
 				   edit you must click on edit and will be shown the same options that are presented when 
-				   you create an assignment. All fields will be preloaded with the current assignment information, so if
+				   you create an assignment. </p>
+				   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/TeacherHelpScreenshots/EditAssignment.png " alt="EditAssignment" class="help-image"/>
+				   <p>All fields will be preloaded with the current assignment information, so if
 				   you submit immediately, no information will be changed.  Or, at this screen, you may choose to edit any
 				   of the information in the current fields. Once you are
 				   finished, click the submit button. A green message will be shown at the top of the page if the edit
@@ -90,10 +98,15 @@
 				   <p>After running the grading script, the individual student submission can be reviewed
 				   via the grading website. On the left hand side of the screen in the navigation menu there is an option to 
 				   "Grade Assignment". Here you will have to select which class the assignment is in and then pick the desired
-				   assignment to grade. From here you will be brought to a page for the first student listed for that assignment.
-				   At the top of the screen you can select wich file to view, which will be pulled from the student's folder for 
+				   assignment to grade. </p>
+				   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/TeacherHelpScreenshots/GradeAssignment.png " alt="GradeAssignment" class="help-image"/>
+				   <p>From here you will be brought to a page for the first student listed for that assignment.</p>
+				   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/TeacherHelpScreenshots/GradeStudent.png " alt="GradeStudent" class="help-image"/>
+				   <p>At the top of the screen you can select wich file to view, which will be pulled from the student's folder for 
 				   that assignment. Results.txt will contain the output generated from the grading script but you can also view
-				   the actual source code directly on the page. Underneath the view window of the file you selected will be the 
+				   the actual source code directly on the page.</p>
+				   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/TeacherHelpScreenshots/GradeWithOutput.png " alt="CreateAssignment" class="help-image"/>
+				   <p>Underneath the view window of the file you selected will be the 
 				   grading rubric for that student's submission. Whenever values that are entered into the fields will be added
 				   together in a total at the bottom. You may also provide comments to the student if you wish.  All grading results
 				   will be emailed to the student for whom the grade is being submitted. 
@@ -114,6 +127,7 @@
 			   	</ol>
 			   
 			   <h1 id="ViewClasses">View Classes</h1>
+			   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/StudentHelpScreenshots/studentClasses.png " alt="ViewClasses" class="help-image"/>
 			   <p>In order to view the classes in which you are enrolled, use the "View Classes" link
 				found in the navigation menu on the left hand side of the screen. This option will
 				take you to a new page where any classes for which you are currently registered can be found.
@@ -122,13 +136,17 @@
 				about the class.  The page will also contain a list of assignments for which you may be able to submit solutions.</p>
 			   
 			   <h1 id="ViewAssignments">View Assignments</h1>
+			   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/StudentHelpScreenshots/studentClass.png " alt="ViewAssignments" class="help-image"/>
 			   <p>Within the page for each class you will be able to view all assignments for that
 			   particular class. Clicking on an individual assignment will
-			   redirect you to the assignment's information page. Here, you will be able to view any information provided
+			   redirect you to the assignment's information page. </p>
+			   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/StudentHelpScreenshots/studentAssignment.png " alt="ViewAssignDetail" class="help-image"/>
+			   <p>Here, you will be able to view any information provided
 			   for the assignment, such as description, due date, late due date, etc. From this assignment page you have the
 			   option to submit solution files if the late due date has not passed.</p>
 			   
 			   <h1 id="SubmitSolution">Submit a Solution</h1>
+			   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/StudentHelpScreenshots/studentFiles.png " alt="SubmitAssign" class="help-image"/>
 			   <p>Submitting a solution for an assignment, provided the teacher is still accepting solutions,
 			   can be done once you navigate to a particular class and assignment. On the assignment's page you will
 			   see a form to allow you to upload files. Click on the browse button to pull up a file browser and navigate to the
@@ -153,6 +171,7 @@
 				</ol>
 
 			   <h2 id="CreateUser">Creating Users</h2>
+			   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/AdminHelpScreenshots/create_users.png " alt="CreateUsers" class="help-image"/> 
 			   <p>In order to create a new user you must first navigate to the "Add User" section
 			   of the webpage. From there you have the option of adding different kinds of users to the system.
 			   This can be done by either adding an individual user via the provided form or by uploading
@@ -164,6 +183,7 @@
 			   the user(s) are submitted.</p>
 			   
 			   <h2 id="CreateClass">Creating Classes</h2>
+			   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/AdminHelpScreenshots/create_classes.png " alt="CreateClasses" class="help-image"/> 
 			   <p>A class can be added to the system by navigating to "Create Class" section of the webpage. From 
 			   here you will be provided a form that takes in all necessary information such as teacher email, room 
 			   number, description, etc. Once the appropriate information has been filled in, click the submit button to process
@@ -171,6 +191,7 @@
 			   Once created, you can now add students to the class using the "Modify Users" page.</p>
 			   
 			   <h2 id="DeleteClass">Deleting Classes</h2>
+			   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/AdminHelpScreenshots/delete_classes.png " alt="DeleteClasses" class="help-image"/> 
 			   <p>In much the same way that you can create a class, you can also delete classes.  The "Delete Classes" page
 			   	works a little differently than then "Create Classes" page in that it allows you to take bulk action.  With
 			   	the "Delete Classes" page, you can search for classes by name or just view a list of all classes.  You can then
@@ -178,6 +199,7 @@
 			   	have selected.</p>
 
 			   <h2 id="ModifyUsers">Modify Users</h2>
+			   <img src="https://vis.cs.pitt.edu/webtest/cs1630Academy/images/AdminHelpScreenshots/modify_users.png " alt="ModifyUsers" class="help-image"/> 
 			   <p>First, navigate to the "Modify Users" page in the navigation. From here you can select any number of users
 			   	and perform either individual or bulk actions on those users.  Those actions include deleting users, changing
 			   	user passwords by providing a password in the blank field, or enrolling users in courses.  In order to enroll
