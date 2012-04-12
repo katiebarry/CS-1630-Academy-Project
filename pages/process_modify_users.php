@@ -74,11 +74,24 @@
 				}
 				else
 				{
-					if (!isset($_SESSION["modify-message"])): $_SESSION["modify-message"] = ""; endif;
-					$_SESSION["modify-message"] .= "Successfully deleted user $user_id.";
-					if ($i != $count-1)
+					@$result = $db->queryExec("delete from Enrollment where user_id='$user_id'", $error);
+					if (empty($result) || $error)
 					{
-						$_SESSION["modify-message"] .= "<br>";
+						if (!isset($_SESSION["modify-message-error"])): $_SESSION["modify-message-error"] = ""; endif;
+						$_SESSION["modify-message-error"] .= "Error deleting user: $error";
+						if ($i != $count-1)
+						{
+							$_SESSION["modify-message-error"] .= "<br>";
+						}
+					}
+					else
+					{
+						if (!isset($_SESSION["modify-message"])): $_SESSION["modify-message"] = ""; endif;
+						$_SESSION["modify-message"] .= "Successfully deleted user $user_id.";
+						if ($i != $count-1)
+						{
+							$_SESSION["modify-message"] .= "<br>";
+						}
 					}
 				}
 			}

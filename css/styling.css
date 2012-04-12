@@ -1361,6 +1361,7 @@ tr th {
   background-size: 25px 25px;
   padding-top: 15px;
   padding-left: 15px;
+  cursor: pointer;
 }
 .message.warning {
   color: black;
@@ -1405,105 +1406,6 @@ tr th {
   background-clip: padding-box;
   margin-bottom: 15px;
 }
-#lock-inner-contents {
-  margin: 0 auto;
-  width: 960px;
-  background-color: #cde3ff;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  margin-top: 50px;
-}
-#lock-inner-contents #login-title {
-  width: 100%;
-  height: 100px;
-  background-color: #414a6c;
-  color: white;
-  margin-bottom: 100px;
-}
-#lock-inner-contents #login-title #title {
-  font-size: 30px;
-  padding-top: 15px;
-  padding-left: 15px;
-}
-#lock-inner-contents #login-title #subtitle {
-  font-size: 18px;
-  padding-left: 15px;
-}
-#lock-inner-contents #login-title img {
-  height: 75px;
-  width: 75px;
-  display: inline;
-  margin-top: -60px;
-  margin-left: 875px;
-}
-#lock-inner-contents #bottom-bar {
-  background-color: #495caf;
-  width: 100%;
-  height: 30px;
-  margin-top: 100px;
-}
-#lock-inner-contents #lock-wrapper {
-  margin: 0 auto;
-  width: 500px;
-  height: 275px;
-  background-color: white;
-  padding: 20px 20px 10px 20px;
-  border: 2px solid black;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-}
-#lock-inner-contents #lock-wrapper input:not(.button) {
-  width: 260px;
-  margin: 0 10px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  padding: 10px;
-  border: 2px groove #d2d2d2;
-}
-#lock-inner-contents #lock-wrapper #buttons {
-  float: right;
-  margin-right: 75px;
-}
-#lock-inner-contents #lock-wrapper #lables {
-  text-align: right;
-  width: 100px;
-  float: left;
-  margin-top: 7px;
-  margin-left: 30px;
-}
-#title-bar {
-  width: 960px;
-  height: 100px;
-  background-color: #414a6c;
-  color: white;
-  margin: 0 auto;
-  margin-top: 10px;
-}
-#title-bar #title {
-  font-size: 30px;
-  padding-top: 15px;
-  padding-left: 15px;
-}
-#title-bar #subtitle {
-  font-size: 18px;
-  padding-left: 15px;
-}
-#title-bar img {
-  height: 75px;
-  width: 75px;
-  display: inline;
-  margin-top: -60px;
-  margin-left: 875px;
-}
 #content {
   margin: 0 auto;
   width: 960px;
@@ -1528,6 +1430,10 @@ tr th {
   padding-top: 10px;
   margin-left: 200px;
   min-height: 325px;
+}
+#content #inner-content .help-image {
+  width: 500px;
+  height: auto !important;
 }
 #content #inner-content #table-container {
   width: 660px;
@@ -1632,6 +1538,105 @@ tr th {
 #content #sidebar hr.dark {
   border: 2px solid #08357d;
   margin-bottom: 5px;
+}
+#lock-inner-contents {
+  margin: 0 auto;
+  width: 960px;
+  background-color: #cde3ff;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin-top: 50px;
+}
+#lock-inner-contents #login-title {
+  width: 100%;
+  height: 100px;
+  background-color: #414a6c;
+  color: white;
+  margin-bottom: 100px;
+}
+#lock-inner-contents #login-title #title {
+  font-size: 30px;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+#lock-inner-contents #login-title #subtitle {
+  font-size: 18px;
+  padding-left: 15px;
+}
+#lock-inner-contents #login-title img {
+  height: 75px;
+  width: 75px;
+  display: inline;
+  margin-top: -60px;
+  margin-left: 875px;
+}
+#lock-inner-contents #bottom-bar {
+  background-color: #495caf;
+  width: 100%;
+  height: 30px;
+  margin-top: 100px;
+}
+#lock-inner-contents #lock-wrapper {
+  margin: 0 auto;
+  width: 500px;
+  height: 275px;
+  background-color: white;
+  padding: 20px 20px 10px 20px;
+  border: 2px solid black;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+#lock-inner-contents #lock-wrapper input:not(.button) {
+  width: 260px;
+  margin: 0 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  padding: 10px;
+  border: 2px groove #d2d2d2;
+}
+#lock-inner-contents #lock-wrapper #buttons {
+  float: right;
+  margin-right: 75px;
+}
+#lock-inner-contents #lock-wrapper #lables {
+  text-align: right;
+  width: 100px;
+  float: left;
+  margin-top: 7px;
+  margin-left: 30px;
+}
+#title-bar {
+  width: 960px;
+  height: 100px;
+  background-color: #414a6c;
+  color: white;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+#title-bar #title {
+  font-size: 30px;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+#title-bar #subtitle {
+  font-size: 18px;
+  padding-left: 15px;
+}
+#title-bar img {
+  height: 75px;
+  width: 75px;
+  display: inline;
+  margin-top: -60px;
+  margin-left: 875px;
 }
 #bottom-bar {
   background-color: #495caf;

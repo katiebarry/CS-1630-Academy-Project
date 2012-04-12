@@ -18,7 +18,7 @@ else
 { //Now we pull the data for the table from the database.
 	//This should be enough to initially populate the table.
 	$results = $db->arrayQuery("select user_id, username, email, usertype from User");
-	$classes = $db->arrayQuery("select class_id, class_name from Class");
+	$classes = $db->arrayQuery("select class_id, class_name from Class, User where User.user_id = Class.instructor_id");
 	//Change needed:
 	//May need another request to verify changes, such as having the enrollment table to approve/deny enrollment changes
 	
@@ -55,7 +55,7 @@ if ($usertype == "admin")
 ?>
 
 <!-- Now we have the HTML for displaying the table. After this works, add on DataTables -->
-<h1>Modify Users</h1>
+<h1>View Users</h1>
 <!-- TODO: create page process_modify_users.php (or do it another way, inline?) and function (below) submit_modify_users -->
 <!-- onsubmit="return submit_modify_users()" -->
 

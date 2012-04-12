@@ -229,9 +229,9 @@ function print_current_files()
 	$course_title = $results[0]["class_name"];
 
 	echo "<h2>View Files:</h2>";
-	echo "<div class='message-wrapper'><div id='success-message' class='info message' style='display: none;'>File Successfully Deleted</div></div>";
-	echo "<div class='message-wrapper'><div id='failure-message' class='warning message' style='display: none;'>Error Deleting File</div></div>";
-	echo "<div class='message-wrapper'><div id='caution-message' class='caution message' style='display: none;'>File may not have been deleted.  Please reload page.</div></div>";
+	echo "<div class='message-wrapper' id='success-message' style='display: none;'><div class='info message'>File Successfully Deleted</div></div>";
+	echo "<div class='message-wrapper' id='failure-message' style='display: none;'><div class='warning message'>Error Deleting File</div></div>";
+	echo "<div class='message-wrapper' id='caution-message' style='display: none;'><div class='caution message'>File may not have been deleted.  Please reload page.</div></div>";
 	echo "<br>";
 	$student_path = BASE_PATH.preg_replace("/ /", "_", $course_title)."-".$class_id."/".preg_replace("/ /", "_", $title)."-".$assignment_id."/".preg_replace("/ /", "_", $_SESSION["username"])."-".$user_id."/";
 	if (!is_dir($student_path))
@@ -268,7 +268,7 @@ function print_current_files()
 				$linenum = 0;
 				foreach ($lines as $line)
 				{
-					echo "$linenum: &nbsp;&nbsp;&nbsp;".strip_tags(trim($line));
+					echo "$linenum: &nbsp;&nbsp;&nbsp;".strip_tags($line);
 					$linenum++;
 				}
 

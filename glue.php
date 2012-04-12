@@ -125,7 +125,7 @@ function get_header()
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/add_user.php">Add Users</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/create_class.php">Add Classes</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_classes.php">View Classes</a></div>
-						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/modify_users.php">Modify Users</a></div>
+						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/modify_users.php">View Users</a></div>
 						<div class='nav-item'><a href="<?= HOME_DIR ?>pages/view_log.php">View Log</a></div>
 
 					<? endif; ?>
