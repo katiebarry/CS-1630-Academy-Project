@@ -114,7 +114,7 @@
 			if (!insert_class($linesplit))
 			{
 				if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
-				$_SESSION["creation-message-error"] .= "Error adding the following line: $line.<br>";
+				$_SESSION["creation-message-error"] .= "Error adding the following line: $line<br>";
 				$success = false;
 			}
 		}
@@ -144,12 +144,14 @@
 		$results = $db->arrayQuery($query);
 		if(empty($results))//email is not found in the User's database
 		{
-			$_SESSION["creation-message-error"] = "Error creating class: instructor with email \"$email\" not found";
+			if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+			$_SESSION["creation-message-error"] .= "Error creating class: instructor with email \"$teacher_email\" not found<br>";
 			return false;
 		}
 		elseif ($results[0]['usertype'] != "teacher") 
 		{
-			$_SESSION["creation-message-error"] = "Error creating class: instructor email not valid - $email";
+			if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+			$_SESSION["creation-message-error"] .= "Error creating class: instructor email not valid - $teacher_email<br>";
 			return false;
 		}
 		else
@@ -164,16 +166,18 @@
 		@$result = $db->queryExec($query, $error);
 		if (empty($result) || $error)
 		{
-			$_SESSION["creation-message-error"] = "Error inserting class into database: $error";
+			if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+			$_SESSION["creation-message-error"] .= "Error inserting class into database: $error<br>";
 			return false;
 		}
 
 		$class_id = $db->lastInsertRowid();
 
-		@$results = $db->queryExec("insert into Enrollment values ('$class_id','$instructor_id')", $error);
+		@$results = $db->queryExec("insert into Enrollment values ('$class_id','$teacher_id')", $error);
 		if (empty($results) || $error)
 		{
-			$_SESSION["creation-message-error"] = "Error enrolling instructor in course: $error";
+			if (!isset($_SESSION["creation-message-error"])): $_SESSION["creation-message-error"] = ""; endif;
+			$_SESSION["creation-message-error"] .= "Error enrolling instructor in course: $error<br>";
 			return false;
 		}
 

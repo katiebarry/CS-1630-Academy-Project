@@ -118,7 +118,7 @@
 				$pass = crypt($raw_pass, '$5$'.$salt);
 				$query = "update User set password = '$pass', salt = '$salt' where user_id = '$user_id'";				
 				
-				$result = $db->queryExec($query, $error);
+				@$result = $db->queryExec($query, $error);
 				if (empty($result) || $error)
 				{
 					if (!isset($_SESSION["modify-message-error"])): $_SESSION["modify-message-error"] = ""; endif;
