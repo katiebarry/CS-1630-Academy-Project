@@ -4,6 +4,13 @@
 	enqueue_script("jquery.dataTables.min.js");
 	get_header();
 
+	if ($_SESSION["usertype"] == "student")
+	{
+		error_message("Insufficient permissions");
+		get_footer();
+		die;
+	}
+
 	$results = $db->arrayQuery("select * from Log");
 
 	?>

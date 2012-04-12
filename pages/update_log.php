@@ -10,4 +10,5 @@
 	$successful = $_POST["successful"];
 	$comment = $_POST["comment"];
 
-	$results = $db->queryExec("insert into Log values (NULL, $assignment_id, $class_id, $user_id, '$username', '$submission_time', $successful, '$comment');");
+	$results = $db->queryExec("insert into Log values (NULL, '$assignment_id', '$class_id', '$user_id', '$username', '$submission_time', '$successful', '$comment');", $error);	
+
