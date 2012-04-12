@@ -101,7 +101,7 @@ if($args[1] == "-t"){
 				$folders = scandir($dir);
 				if(substr($className, -3)==".py"){$python = true;}
 				//The only way to communicate run-time inputs is to run the program as an external process.
-
+				$output_for_diff;
 				foreach($folders as $folder){
 					if($folder != ".." && $folder != "." && $folder != "script_grade.php" && substr($folder, -4) != ".txt" && substr($folder, -4) != ".dat" && substr($folder, -1) != "~"){
 						//get the lines of the test file and put them into an array.
@@ -134,9 +134,11 @@ if($args[1] == "-t"){
 
 						stream_set_blocking($handles[0], 0);
 						if (is_resource($process)) {
+							$count2 = 0;
 							foreach ($inputLines as $line){
-								
+								$output_for_diff[$count2] = $line;
 								$return = fwrite($handles[0], $line);
+								$count2++;
 								if($return == false){	
 									print("Unable to write to ".$folder."'s Results.txt");	
 								}		
@@ -149,6 +151,42 @@ if($args[1] == "-t"){
 						chdir("..");
 
 
+					}
+				}
+				if($args[5] == "dif"){
+					if($args[6] != null){
+						$differences = array();
+						$sample_output = File($args[6]);
+						for($i = 0; $i< size_of($sample_output); $i++){
+							if($output_for_diffs[$i] != null){
+								$temp_chars = str_split($output_for_diff[$i]);
+								$differences[$i] = -1;
+							}
+							else{
+								$differences[$i] = 0;
+								continue;}
+							$temp_char_smaple = str_split($sample_output[$i]);
+							for($j = 0; $j<size_of($temp_char_sample); $j++){
+								if($temp_chars[$j] != null){
+									if($temp_chars[$j] != $temp_char_sample[$j]){
+										$differences[$i] = $j; 
+									}
+								}
+								else{$differences[$i] = $j;
+									continue;}
+
+							}
+							
+						}
+						for($m = 0; $m < size_of($differences); $m++){
+							$percentage = 0;
+							$different_lines = 0;
+							if($differences[$m] != -1){
+								$different_lines++;
+							}
+							$percentage = size_of($differences)/$different_lines;
+							print($percentage);
+						}
 					}
 				}
 
