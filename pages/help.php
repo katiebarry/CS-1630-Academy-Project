@@ -82,6 +82,7 @@
 				   can be run and they will be simply appended to the end of the file in another section. The sections will be 
 				   distinguished by the title of the input file that was run.</p>
 
+				<p>Another functionality of the grading script is the ability to compare output.  Similar to the way a dif works.  In order to utilize this you must also be running a test with the -t flag.  After the test flag has its accompanying argument you can use the -dif flag to trigger a dif as well.  This flag also requires that you provide the sample output that you would like each students output to be compared to.  It should be placed along with the other files in the assignment folder.</p>
 				   <p>Python projects can be tested in the same way that java files are tested.  Simply use the command <b>"php script_grade.php -t python_file -f testfile.txt"</b>.</p>
 
 				   <p>Remember that a test file is not required in order to test a project.  If an assignment requires no input to run, simply omit the "-f" and "testfile.txt". </p> 

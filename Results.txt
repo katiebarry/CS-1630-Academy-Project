@@ -1,0 +1,46 @@
+
+Output of Dif 
+--------------------------------------------------
+
+
+The files are 0.77777777777778% different with differences on lines: 
+3
+6
+
+
+
+Output of Dif 
+--------------------------------------------------
+
+
+The files are 0.77777777777778% different with differences on lines: 
+3
+6
+
+
+
+Output of Dif 
+--------------------------------------------------
+
+
+The files are 0% different with differences on lines: 
+3
+6
+
+
+
+Output of Dif 
+--------------------------------------------------
+
+
+The files are 0% different with differences on lines: 
+
+
+
+Output of Dif 
+--------------------------------------------------
+
+
+The files are 0% different with differences on lines: 
+
+

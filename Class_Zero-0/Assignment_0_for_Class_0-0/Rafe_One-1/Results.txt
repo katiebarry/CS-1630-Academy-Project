@@ -1,15 +1,4 @@
 
-Compilation of Print.java
---------------------------------------------------
-
-
-
-
-Output of running 
---------------------------------------------------
-
-Hello1
-
 Compilation of Prime.java
 --------------------------------------------------
 
@@ -28,3 +17,13 @@ Enter the starting number > Enter the ending number > the prime numbers between 
 29
 31
 37
+
+Output of Dif with sample.txt 
+--------------------------------------------------
+
+
+The files are 77.777777777778% the same with differences on lines: 
+4
+7
+
+

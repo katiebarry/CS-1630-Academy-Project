@@ -1,35 +1,29 @@
 
-Compilation of Print.java
---------------------------------------------------
-
-
-
-
-Output of running 
---------------------------------------------------
-
-Hello2
-
 Compilation of Prime.java
 --------------------------------------------------
 
-Prime.java:4: ';' expected
-		Scanner scan = new Scanner(System.in)
-		                                     ^
-1 error
 
 
 
 Output of running 
 --------------------------------------------------
 
-java.lang.NoClassDefFoundError: Prime
-Caused by: java.lang.ClassNotFoundException: Prime
-	at java.net.URLClassLoader$1.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.net.URLClassLoader.findClass(Unknown Source)
-	at java.lang.ClassLoader.loadClass(Unknown Source)
-	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
-	at java.lang.ClassLoader.loadClass(Unknown Source)
-Could not find the main class: Prime.  Program will exit.
-Exception in thread "main" 
+Enter the starting number > Enter the ending number > the prime numbers between 10 and 40 is:
+11
+13
+17
+19
+23
+29
+31
+37
+
+Output of Dif with sample.txt 
+--------------------------------------------------
+
+
+The files are 77.777777777778% the same with differences on lines: 
+4
+7
+
+
